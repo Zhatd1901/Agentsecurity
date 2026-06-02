@@ -73,6 +73,29 @@ class MainControlExtension(AsyncExtension):
         self.turn_id: int = 0
         self.session_id: str = "0"
 
+        # Conversation logging
+        self._current_call_sid: str = ""
+        self._conversation_log_dir: str = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "..", "..", "..", "..", "..", "..",  # up to ai_agents/
+        )
+
+    def _log_conversation(self, role: str, text: str):
+        """Append a line to the conversation log file for the current call."""
+        if not self._current_call_sid or not text:
+            return
+        try:
+            os.makedirs(self._conversation_log_dir, exist_ok=True)
+            log_path = os.path.join(
+                self._conversation_log_dir,
+                f"conversation_{self._current_call_sid}.txt",
+            )
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(f"[{timestamp}] {role}: {text}\n")
+        except Exception:
+            pass  # silently ignore log write failures
+
     def _current_metadata(self) -> dict:
         return {"session_id": self.session_id, "turn_id": self.turn_id}
 
@@ -212,6 +235,9 @@ class MainControlExtension(AsyncExtension):
         stream_id = int(self.session_id)
         if not event.text:
             return
+        # Log user speech to conversation file (final results only)
+        if event.final:
+            self._log_conversation("user", event.text)
         if event.final or len(event.text) > 2:
             await self._interrupt()
         if event.final:
@@ -232,6 +258,8 @@ class MainControlExtension(AsyncExtension):
             remaining_text = self.sentence_fragment or ""
             self.sentence_fragment = ""
             await self._send_to_tts(remaining_text, True)
+            # Log complete assistant response
+            self._log_conversation("assistant", event.text)
 
         await self._send_transcript(
             "assistant",
@@ -671,6 +699,8 @@ class MainControlExtension(AsyncExtension):
         await self._reset_all_subsystems(call_sid)
         # Also clean up the call session
         await self._end_call_and_cleanup(call_sid)
+        # Clear current call tracking
+        self._current_call_sid = ""
 
     async def _reset_all_subsystems(self, call_sid: str = "reset"):
         """Reset ALL subsystems to clean state for next call.
@@ -726,11 +756,10 @@ class MainControlExtension(AsyncExtension):
             # ---- Full reset for new call ----
             await self._reset_all_subsystems(call_sid)
 
-            self.ten_env.log_info(
-                f"WebSocket connected for call {call_sid}, sending greeting"
-            )
-
+            # Track current call for conversation logging
+            self._current_call_sid = call_sid
             greeting_text = self.config.greeting
+            self._log_conversation("assistant", greeting_text)
             greeting_file = "/tmp/greeting_audio.pcm"
 
             # Try to play pre-generated audio file directly (zero-latency)

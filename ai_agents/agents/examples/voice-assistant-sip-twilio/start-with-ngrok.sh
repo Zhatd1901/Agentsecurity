@@ -7,9 +7,11 @@ echo "Starting ngrok tunnel for WSS support..."
 
 # Check if ngrok is installed
 if ! command -v ngrok &> /dev/null; then
-    echo "Error: ngrok is not installed. Please install ngrok first."
-    echo "Visit: https://ngrok.com/download"
-    exit 1
+    echo "Warning: ngrok is not installed. Skipping ngrok tunnel."
+    echo "Download from: https://ngrok.com/download"
+    echo "Without ngrok, Twilio WSS will not work for incoming calls."
+    echo "For development without ngrok, ensure your server has a public URL."
+    exit 0
 fi
 
 # Check if ngrok auth token is set

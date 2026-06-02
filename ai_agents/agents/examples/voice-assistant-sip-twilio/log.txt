@@ -1,0 +1,561 @@
+task: [run-frontend] bun run dev
+task: [run-gd-server] tman designer
+task: [run-ngrok] ./start-with-ngrok.sh
+Starting ngrok tunnel for WSS support...
+Starting ngrok tunnel with WebSocket support...
+Make sure your server is running on port 9000 before testing WSS connections.
+
+ngrok will start in foreground. Press Ctrl+C to stop.
+Logs will be saved to: /tmp/ngrok.log
+
+task: [install-server-deps] pip3 install -r requirements.txt
+!  Doesn't specify the base directory, use current working directory instead: /app/agents/examples/voice-assistant-sip-twilio/tenapp
+$ next dev
+t=2026-06-02T17:08:48+0000 lvl=info msg="open config file" path=/app/agents/examples/voice-assistant-sip-twilio/ngrok.yml err=nil
+t=2026-06-02T17:08:48+0000 lvl=info msg="FIPS 140 mode" enabled=false
+t=2026-06-02T17:08:49+0000 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+Requirement already satisfied: fastapi in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 4)) (0.136.3)
+Requirement already satisfied: uvicorn[standard] in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 5)) (0.48.0)
+Requirement already satisfied: twilio in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 8)) (9.10.9)
+Requirement already satisfied: pydantic in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 11)) (2.13.4)
+Requirement already satisfied: annotated-doc>=0.0.2 in /usr/local/lib/python3.10/dist-packages (from fastapi->-r requirements.txt (line 4)) (0.0.4)
+Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.10/dist-packages (from fastapi->-r requirements.txt (line 4)) (0.4.2)
+Requirement already satisfied: typing-extensions>=4.8.0 in /usr/local/lib/python3.10/dist-packages (from fastapi->-r requirements.txt (line 4)) (4.15.0)
+Requirement already satisfied: starlette>=0.46.0 in /usr/local/lib/python3.10/dist-packages (from fastapi->-r requirements.txt (line 4)) (1.2.1)
+Requirement already satisfied: h11>=0.8 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (0.16.0)
+Requirement already satisfied: click>=7.0 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (8.3.1)
+Requirement already satisfied: websockets>=10.4 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (16.0)
+Requirement already satisfied: python-dotenv>=0.13 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (1.2.2)
+Requirement already satisfied: httptools>=0.6.3 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (0.8.0)
+Requirement already satisfied: uvloop>=0.15.1 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (0.22.1)
+Requirement already satisfied: watchfiles>=0.20 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (1.2.0)
+Requirement already satisfied: pyyaml>=5.1 in /usr/local/lib/python3.10/dist-packages (from uvicorn[standard]->-r requirements.txt (line 5)) (6.0.3)
+Requirement already satisfied: requests>=2.0.0 in /usr/local/lib/python3.10/dist-packages (from twilio->-r requirements.txt (line 8)) (2.34.2)
+Requirement already satisfied: PyJWT<3.0.0,>=2.0.0 in /usr/local/lib/python3.10/dist-packages (from twilio->-r requirements.txt (line 8)) (2.13.0)
+Requirement already satisfied: aiohttp-retry>=2.8.3 in /usr/local/lib/python3.10/dist-packages (from twilio->-r requirements.txt (line 8)) (2.9.1)
+Requirement already satisfied: aiohttp>=3.8.4 in /usr/local/lib/python3.10/dist-packages (from twilio->-r requirements.txt (line 8)) (3.14.0)
+Requirement already satisfied: pydantic-core==2.46.4 in /usr/local/lib/python3.10/dist-packages (from pydantic->-r requirements.txt (line 11)) (2.46.4)
+Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.10/dist-packages (from pydantic->-r requirements.txt (line 11)) (0.7.0)
+Requirement already satisfied: yarl<2.0,>=1.17.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (1.24.2)
+Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (6.7.1)
+Requirement already satisfied: propcache>=0.2.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (0.5.2)
+Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (26.1.0)
+Requirement already satisfied: aiosignal>=1.4.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (1.4.0)
+Requirement already satisfied: async-timeout<6.0,>=4.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (5.0.1)
+Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (2.6.2)
+Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.10/dist-packages (from aiohttp>=3.8.4->twilio->-r requirements.txt (line 8)) (1.8.0)
+Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests>=2.0.0->twilio->-r requirements.txt (line 8)) (3.17)
+Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.10/dist-packages (from requests>=2.0.0->twilio->-r requirements.txt (line 8)) (2.7.0)
+Requirement already satisfied: certifi>=2023.5.7 in /usr/local/lib/python3.10/dist-packages (from requests>=2.0.0->twilio->-r requirements.txt (line 8)) (2026.5.20)
+Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests>=2.0.0->twilio->-r requirements.txt (line 8)) (3.4.7)
+Requirement already satisfied: anyio<5,>=3.6.2 in /usr/local/lib/python3.10/dist-packages (from starlette>=0.46.0->fastapi->-r requirements.txt (line 4)) (4.13.0)
+Requirement already satisfied: exceptiongroup>=1.0.2 in /usr/local/lib/python3.10/dist-packages (from anyio<5,>=3.6.2->starlette>=0.46.0->fastapi->-r requirements.txt (line 4)) (1.3.1)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+task: [run-api-server] python3 main.py --tenapp-dir ../tenapp
+2026-06-02 17:08:49,989 - __main__ - INFO - Starting Voice Assistant SIP Twilio Server...
+2026-06-02 17:08:49,989 - __main__ - INFO - Tenapp directory: ../tenapp
+2026-06-02 17:08:49,989 - __main__ - INFO - Server port: 8080
+2026-06-02 17:08:49,989 - __main__ - INFO - Configuration loaded: HTTP port=8080
+2026-06-02 17:08:49,990 - __main__ - INFO - Starting HTTP server...
+2026-06-02 17:08:49,990 - twilio_process_manager - INFO - Starting Twilio Configuration Server on 0.0.0.0:8080
+2026-06-02 17:08:49,990 - twilio_process_manager - INFO - Starting Twilio Configuration Server on 0.0.0.0:8080
+2026-06-02 17:08:49,990 - twilio_process_manager - INFO - Starting tenapp process from ../tenapp
+2026-06-02 17:08:49,990 - twilio_process_manager - INFO - Starting tenapp process from ../tenapp
+2026-06-02 17:08:49,994 - twilio_process_manager - INFO - Tenapp process started with PID: 7059
+2026-06-02 17:08:49,994 - twilio_process_manager - INFO - Tenapp process started with PID: 7059
+2026-06-02 17:08:49,994 - twilio_process_manager - INFO - Tenapp output will be displayed in this console
+2026-06-02 17:08:49,994 - twilio_process_manager - INFO - Tenapp output will be displayed in this console
+2026-06-02 17:08:49,994 - twilio_process_manager - INFO - Starting tenapp process monitor
+2026-06-02 17:08:49,994 - twilio_process_manager - INFO - Starting tenapp process monitor
+2026-06-02T17:08:50.222091364+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_app_create_addon_instance[0m@[34maddon.c:456[0m [37mThe addon python_addon_loader already exists; create an instance of it[0m
+2026-06-02T17:08:50.222538679+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mload_python_lib[0m@[34mmain.cc:583[0m [37m[Python addon loader] Starting to load Python libraries...[0m
+2026-06-02T17:08:50.222546079+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mload_system_lib_python[0m@[34mmain.cc:523[0m [37m[Python addon loader] TEN_PYTHON_LIB_PATH not set, trying default Python 3.10...[0m
+2026-06-02T17:08:50.228061567+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mload_system_lib_python[0m@[34mmain.cc:553[0m [37m[Python addon loader] Successfully loaded libpython from libpython3.10.so (default Python 3.10)[0m
+2026-06-02T17:08:50.229039500+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mload_python_lib[0m@[34mmain.cc:657[0m [37m[Python addon loader] Attempting to load: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/system/ten_runtime_python/lib/libten_runtime_python.so[0m
+2026-06-02T17:08:50.231036968+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mload_python_lib[0m@[34mmain.cc:678[0m [37m[Python addon loader] Successfully loaded libten_runtime_python.so from /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/system/ten_runtime_python/lib/libten_runtime_python.so[0m
+2026-06-02T17:08:50.231068169+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mload_ten_py_api_functions[0m@[34mmain.cc:733[0m [37m[Python addon loader] Successfully loaded all ten_py API functions[0m
+2026-06-02T17:08:50.231072569+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mload_python_lib[0m@[34mmain.cc:695[0m [37m[Python addon loader] Successfully loaded all Python libraries and API functions[0m
+['/app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/system/ten_ai_base/interface', '/app/agents/examples/voice-assistant-sip-twilio/tenapp', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages', '/app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/system/ten_runtime_python/lib', '/app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/system/ten_runtime_python/interface', '/app/agents/examples/voice-assistant-sip-twilio/tenapp']
+2026-06-02T17:08:50.259478236+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mcomplete_and_log_sys_path[0m@[34mmain.cc:363[0m [37m[Python addon loader] python initialized, sys.path: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/system/ten_ai_base/interface::/usr/lib/python310.zip:/usr/lib/python3.10:/usr/lib/python3.10/lib-dynload[0m
+2026-06-02T17:08:50.259492737+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mon_init[0m@[34mmain.cc:219[0m [37m[Python addon loader] load_all_on_init is false, skip loading all python extensions when startup.[0m
+2026-06-02T17:08:50.267562411+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_app_create_addon_instance[0m@[34maddon.c:456[0m [37mThe addon default_extension_group already exists; create an instance of it[0m
+2026-06-02T17:08:50.267583012+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_app_create_addon_instance[0m@[34maddon.c:456[0m [37mThe addon default_extension_group already exists; create an instance of it[0m
+2026-06-02T17:08:50.267588812+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_app_create_addon_instance[0m@[34maddon.c:456[0m [37mThe addon default_extension_group already exists; create an instance of it[0m
+2026-06-02T17:08:50.267593512+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_app_create_addon_instance[0m@[34maddon.c:456[0m [37mThe addon default_extension_group already exists; create an instance of it[0m
+2026-06-02T17:08:50.267597812+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_app_create_addon_instance[0m@[34maddon.c:456[0m [37mThe addon default_extension_group already exists; create an instance of it[0m
+2026-06-02T17:08:50.267602413+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_app_create_addon_instance[0m@[34maddon.c:456[0m [37mThe addon default_extension_group already exists; create an instance of it[0m
+2026-06-02T17:08:50.267632814+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_extension_context_log_graph_resources[0m@[34mextension_context.c:387[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d"}[0m
+2026-06-02T17:08:50.267824320+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_set_default_manifest_info[0m@[34mdefault.c:22[0m [37mSkip the loading of manifest.json because the base_dir of 'default' is missing[0m
+2026-06-02T17:08:50.267832720+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_set_default_property_info[0m@[34mdefault.c:48[0m [37mSkip the loading of property.json because the base_dir of 'default' is missing[0m
+2026-06-02T17:08:50.268181532+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_set_default_manifest_info[0m@[34mdefault.c:22[0m [37mSkip the loading of manifest.json because the base_dir of 'stt' is missing[0m
+2026-06-02T17:08:50.268202833+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_set_default_property_info[0m@[34mdefault.c:48[0m [37mSkip the loading of property.json because the base_dir of 'stt' is missing[0m
+2026-06-02T17:08:50.268299736+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_set_default_manifest_info[0m@[34mdefault.c:22[0m [37mSkip the loading of manifest.json because the base_dir of 'dify' is missing[0m
+2026-06-02T17:08:50.268307937+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_set_default_property_info[0m@[34mdefault.c:48[0m [37mSkip the loading of property.json because the base_dir of 'dify' is missing[0m
+2026-06-02T17:08:50.268514344+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_set_default_manifest_info[0m@[34mdefault.c:22[0m [37mSkip the loading of manifest.json because the base_dir of 'tts' is missing[0m
+2026-06-02T17:08:50.268530344+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_set_default_property_info[0m@[34mdefault.c:48[0m [37mSkip the loading of property.json because the base_dir of 'tts' is missing[0m
+2026-06-02T17:08:50.268767552+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_set_default_manifest_info[0m@[34mdefault.c:22[0m [37mSkip the loading of manifest.json because the base_dir of 'control' is missing[0m
+2026-06-02T17:08:50.268783953+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_set_default_property_info[0m@[34mdefault.c:48[0m [37mSkip the loading of property.json because the base_dir of 'control' is missing[0m
+2026-06-02T17:08:50.268902357+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_set_default_manifest_info[0m@[34mdefault.c:22[0m [37mSkip the loading of manifest.json because the base_dir of 'transcriber' is missing[0m
+2026-06-02T17:08:50.268921158+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_set_default_property_info[0m@[34mdefault.c:48[0m [37mSkip the loading of property.json because the base_dir of 'transcriber' is missing[0m
+2026-06-02T17:08:50.269169266+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:agora_rtc' in registry[0m
+2026-06-02T17:08:50.269177366+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_set_default_manifest_info[0m@[34mdefault.c:22[0m [37mSkip the loading of manifest.json because the base_dir of 'ten:unspecified_group' is missing[0m
+2026-06-02T17:08:50.269228068+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_set_default_property_info[0m@[34mdefault.c:48[0m [37mSkip the loading of property.json because the base_dir of 'ten:unspecified_group' is missing[0m
+2026-06-02T17:08:50.383902171+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:weatherapi_tool_python' in registry[0m
+2026-06-02T17:08:50.383917371+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension agora_rtc[0m
+2026-06-02T17:08:50.384810302+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_load_specific_addon_using_native_addon_loader[0m@[34maddon_autoload.c:434[0m [37mAddon lib/ folder does not exist or is not a directory: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/weatherapi_tool_python/lib[0m
+Successfully registered addon 'weatherapi_tool_python'
+:-)  Starting server at http://0.0.0.0:49483
+t=2026-06-02T17:08:50+0000 lvl=info msg="client session established" obj=tunnels.session
+t=2026-06-02T17:08:50+0000 lvl=info msg="tunnel session started" obj=tunnels.session
+2026-06-02T17:08:50.939811990+00:00 7059(7072) [32mI[0m [35mon_create_instance[0m@[34maddon.py:21[0m [37m[weatherapi_tool_python] WeatherToolExtensionAddon on_create_instance[0m
+2026-06-02T17:08:50.939886593+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:xfyun_asr_bigmodel_python' in registry[0m
+2026-06-02T17:08:50.941329742+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_load_specific_addon_using_native_addon_loader[0m@[34maddon_autoload.c:434[0m [37mAddon lib/ folder does not exist or is not a directory: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/xfyun_asr_bigmodel_python/lib[0m
+Successfully registered addon 'xfyun_asr_bigmodel_python'
+2026-06-02T17:08:51.025306300+00:00 7059(7072) [32mI[0m [35mon_create_instance[0m@[34maddon.py:12[0m [37m[xfyun_asr_bigmodel_python] on_create_instance[0m
+2026-06-02T17:08:51.025403803+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:dify_llm2_python' in registry[0m
+2026-06-02T17:08:51.026695547+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_load_specific_addon_using_native_addon_loader[0m@[34maddon_autoload.c:434[0m [37mAddon lib/ folder does not exist or is not a directory: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/dify_llm2_python/lib[0m
+Successfully registered addon 'dify_llm2_python'
+2026-06-02T17:08:51.075406605+00:00 7059(7072) [32mI[0m [35mon_create_instance[0m@[34maddon.py:18[0m [37m[dify_llm2_python] DifyLLM2ExtensionAddon on_create_instance[0m
+2026-06-02T17:08:51.075463107+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:xfyun_tts_python' in registry[0m
+2026-06-02T17:08:51.075926523+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_load_specific_addon_using_native_addon_loader[0m@[34maddon_autoload.c:434[0m [37mAddon lib/ folder does not exist or is not a directory: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/xfyun_tts_python/lib[0m
+Successfully registered addon 'xfyun_tts_python'
+2026-06-02T17:08:51.104724903+00:00 7059(7072) [32mI[0m [35mon_create_instance[0m@[34maddon.py:17[0m [37m[xfyun_tts_python] XfYunTTSExtensionAddon on_create_instance[0m
+2026-06-02T17:08:51.104880008+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:main_python' in registry[0m
+2026-06-02T17:08:51.105345124+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_load_specific_addon_using_native_addon_loader[0m@[34maddon_autoload.c:434[0m [37mAddon lib/ folder does not exist or is not a directory: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/main_python/lib[0m
+Successfully registered addon 'main_python'
+t=2026-06-02T17:08:51+0000 lvl=info msg="started tunnel" obj=tunnels name=twilio-server addr=http://localhost:9000 url=https://tiny-easter-overcast.ngrok-free.dev
+2026-06-02T17:08:51.440731538+00:00 7059(7072) [33mW[0m [36mten:runtime[0m [35mten_addon_manager_add_addon[0m@[34maddon_manager.c:115[0m [37mAddon 'extension:xfyun_tts_python' is already registered[0m
+2026-06-02T17:08:51.448720410+00:00 7059(7072) [32mI[0m [35mon_create_instance[0m@[34maddon.py:18[0m [37m[main_python] on_create_instance[0m
+2026-06-02T17:08:51.448806913+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:message_collector2' in registry[0m
+2026-06-02T17:08:51.450389267+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_load_specific_addon_using_native_addon_loader[0m@[34maddon_autoload.c:434[0m [37mAddon lib/ folder does not exist or is not a directory: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/message_collector2/lib[0m
+Successfully registered addon 'message_collector2'
+2026-06-02T17:08:51.496383732+00:00 7059(7072) [32mI[0m [35mon_create_instance[0m@[34maddon.py:21[0m [37m[message_collector2] MessageCollector2ExtensionAddon on_create_instance[0m
+2026-06-02T17:08:51.496464835+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_manager_register_specific_addon[0m@[34maddon_manager.c:383[0m [37mUnable to find 'extension:streamid_adapter' in registry[0m
+2026-06-02T17:08:51.497839082+00:00 7059(7072) [32mI[0m [36mten:runtime[0m [35mten_addon_load_specific_addon_using_native_addon_loader[0m@[34maddon_autoload.c:434[0m [37mAddon lib/ folder does not exist or is not a directory: /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/streamid_adapter/lib[0m
+Successfully registered addon 'streamid_adapter'
+2026-06-02T17:08:51.534263622+00:00 7059(7072) [32mI[0m [35mon_create_instance[0m@[34maddon.py:18[0m [37m[streamid_adapter] on_create_instance[0m
+2026-06-02T17:08:51.534359325+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension weatherapi_tool_python[0m
+2026-06-02T17:08:51.534367525+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension stt[0m
+2026-06-02T17:08:51.534380826+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension llm[0m
+2026-06-02T17:08:51.534383426+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_thread_log_graph_resources[0m@[34mextension_thread.c:578[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d", "extension_threads": {"7105": {"extensions": ["agora_rtc", "weatherapi_tool_python"]}}}[0m
+2026-06-02T17:08:51.534381926+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_thread_log_graph_resources[0m@[34mextension_thread.c:578[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d", "extension_threads": {"7106": {"extensions": ["stt"]}}}[0m
+2026-06-02T17:08:51.534392826+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_thread_log_graph_resources[0m@[34mextension_thread.c:578[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d", "extension_threads": {"7107": {"extensions": ["llm"]}}}[0m
+2026-06-02T17:08:51.534404026+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension tts[0m
+2026-06-02T17:08:51.534415627+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_thread_log_graph_resources[0m@[34mextension_thread.c:578[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d", "extension_threads": {"7108": {"extensions": ["tts"]}}}[0m
+2026-06-02T17:08:51.534427327+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension message_collector[0m
+2026-06-02T17:08:51.534438928+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_thread_log_graph_resources[0m@[34mextension_thread.c:578[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d", "extension_threads": {"7110": {"extensions": ["message_collector"]}}}[0m
+2026-06-02T17:08:51.534445328+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[stt] on_configure()[0m
+2026-06-02T17:08:51.534445628+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[agora_rtc] on_configure()[0m
+2026-06-02T17:08:51.534450428+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:55[0m [37m[stt] proxy_on_configure: before acquiring GIL[0m
+2026-06-02T17:08:51.534454128+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[agora_rtc] on_configure() done[0m
+2026-06-02T17:08:51.534454628+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:65[0m [37m[stt] proxy_on_configure: GIL acquired[0m
+2026-06-02T17:08:51.534460728+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[llm] on_configure()[0m
+2026-06-02T17:08:51.534464728+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[message_collector] on_configure()[0m
+2026-06-02T17:08:51.534447128+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension streamid_adapter[0m
+2026-06-02T17:08:51.534468629+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:82[0m [37m[stt] proxy_on_configure: before calling _proxy_on_configure[0m
+2026-06-02T17:08:51.534467429+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:55[0m [37m[llm] proxy_on_configure: before acquiring GIL[0m
+2026-06-02T17:08:51.534488629+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[tts] on_configure()[0m
+2026-06-02T17:08:51.534499430+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:55[0m [37m[tts] proxy_on_configure: before acquiring GIL[0m
+2026-06-02T17:08:51.534495930+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_thread_log_graph_resources[0m@[34mextension_thread.c:578[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d", "extension_threads": {"7111": {"extensions": ["streamid_adapter"]}}}[0m
+2026-06-02T17:08:51.534503030+00:00 7059(7106) [32mI[0m [35m_get_cached_thread_mode[0m@[34masync_extension.py:63[0m [37m[stt] TEN_PYTHON_THREAD_MODE read from environment variable: single_thread[0m
+2026-06-02T17:08:51.534447128+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mon_addon_create_extension_done[0m@[34mbuiltin_extension_group.c:89[0m [37mSuccess to create extension main_control[0m
+2026-06-02T17:08:51.534468329+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:55[0m [37m[message_collector] proxy_on_configure: before acquiring GIL[0m
+2026-06-02T17:08:51.534524631+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_thread_log_graph_resources[0m@[34mextension_thread.c:578[0m [37m[graph resources] {"app_base_dir": "/app/agents/examples/voice-assistant-sip-twilio/tenapp", "graph_name": "voice_assistant", "graph_id": "febacf58-7177-483f-b773-8354031efd8d", "extension_threads": {"7109": {"extensions": ["main_control"]}}}[0m
+2026-06-02T17:08:51.534562932+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[streamid_adapter] on_configure()[0m
+2026-06-02T17:08:51.534569132+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:55[0m [37m[streamid_adapter] proxy_on_configure: before acquiring GIL[0m
+2026-06-02T17:08:51.534569232+00:00 7059(7106) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:173[0m [37m[stt] _proxy_on_configure_single_thread: enter, thread=128948539221568[0m
+2026-06-02T17:08:51.534593933+00:00 7059(7106) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:182[0m [37m[stt] _proxy_on_configure_single_thread: before get_or_start_thread[0m
+2026-06-02T17:08:51.534602333+00:00 7059(7106) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:53[0m [37m[stt] get_or_start_thread: enter, thread=128948539221568[0m
+2026-06-02T17:08:51.534608833+00:00 7059(7106) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:62[0m [37m[stt] get_or_start_thread: starting PythonGlobalMainThread[0m
+2026-06-02T17:08:51.534642335+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[main_control] on_configure()[0m
+2026-06-02T17:08:51.534648035+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:55[0m [37m[main_control] proxy_on_configure: before acquiring GIL[0m
+2026-06-02T17:08:51.534651935+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:65[0m [37m[main_control] proxy_on_configure: GIL acquired[0m
+2026-06-02T17:08:51.534659935+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:82[0m [37m[main_control] proxy_on_configure: before calling _proxy_on_configure[0m
+2026-06-02T17:08:51.534741238+00:00 7059(7109) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:173[0m [37m[main_control] _proxy_on_configure_single_thread: enter, thread=128948514043456[0m
+2026-06-02T17:08:51.534790440+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:65[0m [37m[tts] proxy_on_configure: GIL acquired[0m
+2026-06-02T17:08:51.534803040+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:82[0m [37m[tts] proxy_on_configure: before calling _proxy_on_configure[0m
+2026-06-02T17:08:51.534834141+00:00 7059(7108) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:173[0m [37m[tts] _proxy_on_configure_single_thread: enter, thread=128948522436160[0m
+2026-06-02T17:08:51.534864342+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:65[0m [37m[message_collector] proxy_on_configure: GIL acquired[0m
+2026-06-02T17:08:51.534879143+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:82[0m [37m[message_collector] proxy_on_configure: before calling _proxy_on_configure[0m
+2026-06-02T17:08:51.534914844+00:00 7059(7110) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:173[0m [37m[message_collector] _proxy_on_configure_single_thread: enter, thread=128948505650752[0m
+2026-06-02T17:08:51.534970746+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:65[0m [37m[streamid_adapter] proxy_on_configure: GIL acquired[0m
+2026-06-02T17:08:51.534983646+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:82[0m [37m[streamid_adapter] proxy_on_configure: before calling _proxy_on_configure[0m
+2026-06-02T17:08:51.535016447+00:00 7059(7111) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:173[0m [37m[streamid_adapter] _proxy_on_configure_single_thread: enter, thread=128948497258048[0m
+2026-06-02T17:08:51.535048548+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:65[0m [37m[llm] proxy_on_configure: GIL acquired[0m
+2026-06-02T17:08:51.535059049+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:82[0m [37m[llm] proxy_on_configure: before calling _proxy_on_configure[0m
+2026-06-02T17:08:51.535103550+00:00 7059(7107) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:173[0m [37m[llm] _proxy_on_configure_single_thread: enter, thread=128948530828864[0m
+2026-06-02T17:08:51.537032216+00:00 7059(7106) [33mW[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:71[0m [37m[stt] Warning: namedthreads not available, thread names will not be set in system level[0m
+2026-06-02T17:08:51.537344727+00:00 7059(7106) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:87[0m [37m[stt] get_or_start_thread: before _loop_ready_event.wait(), is_set=False[0m
+2026-06-02T17:08:51.537406429+00:00 7059(7109) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:182[0m [37m[main_control] _proxy_on_configure_single_thread: before get_or_start_thread[0m
+2026-06-02T17:08:51.537427929+00:00 7059(7109) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:53[0m [37m[main_control] get_or_start_thread: enter, thread=128948514043456[0m
+2026-06-02T17:08:51.537454230+00:00 7059(7109) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:83[0m [37m[main_control] get_or_start_thread: thread already alive, skipping start[0m
+2026-06-02T17:08:51.537475431+00:00 7059(7109) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:87[0m [37m[main_control] get_or_start_thread: before _loop_ready_event.wait(), is_set=False[0m
+2026-06-02T17:08:51.537594735+00:00 7059(7110) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:182[0m [37m[message_collector] _proxy_on_configure_single_thread: before get_or_start_thread[0m
+2026-06-02T17:08:51.537616436+00:00 7059(7110) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:53[0m [37m[message_collector] get_or_start_thread: enter, thread=128948505650752[0m
+2026-06-02T17:08:51.537677338+00:00 7059(7108) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:182[0m [37m[tts] _proxy_on_configure_single_thread: before get_or_start_thread[0m
+2026-06-02T17:08:51.537693238+00:00 7059(7108) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:53[0m [37m[tts] get_or_start_thread: enter, thread=128948522436160[0m
+2026-06-02T17:08:51.537753040+00:00 7059(7107) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:182[0m [37m[llm] _proxy_on_configure_single_thread: before get_or_start_thread[0m
+2026-06-02T17:08:51.537770041+00:00 7059(7107) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:53[0m [37m[llm] get_or_start_thread: enter, thread=128948530828864[0m
+2026-06-02T17:08:51.537826943+00:00 7059(7111) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:182[0m [37m[streamid_adapter] _proxy_on_configure_single_thread: before get_or_start_thread[0m
+2026-06-02T17:08:51.537842243+00:00 7059(7111) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:53[0m [37m[streamid_adapter] get_or_start_thread: enter, thread=128948497258048[0m
+2026-06-02T17:08:51.537875345+00:00 7059(7110) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:83[0m [37m[message_collector] get_or_start_thread: thread already alive, skipping start[0m
+2026-06-02T17:08:51.537897145+00:00 7059(7110) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:87[0m [37m[message_collector] get_or_start_thread: before _loop_ready_event.wait(), is_set=False[0m
+2026-06-02T17:08:51.538002749+00:00 7059(7108) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:83[0m [37m[tts] get_or_start_thread: thread already alive, skipping start[0m
+2026-06-02T17:08:51.538028150+00:00 7059(7108) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:87[0m [37m[tts] get_or_start_thread: before _loop_ready_event.wait(), is_set=False[0m
+2026-06-02T17:08:51.538063351+00:00 7059(7107) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:83[0m [37m[llm] get_or_start_thread: thread already alive, skipping start[0m
+2026-06-02T17:08:51.538100552+00:00 7059(7107) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:87[0m [37m[llm] get_or_start_thread: before _loop_ready_event.wait(), is_set=False[0m
+2026-06-02T17:08:51.538159554+00:00 7059(7111) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:83[0m [37m[streamid_adapter] get_or_start_thread: thread already alive, skipping start[0m
+2026-06-02T17:08:51.538172755+00:00 7059(7111) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:87[0m [37m[streamid_adapter] get_or_start_thread: before _loop_ready_event.wait(), is_set=False[0m
+2026-06-02T17:08:51.544661776+00:00 7059(7109) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:96[0m [37m[main_control] get_or_start_thread: wait() returned, loop=128948272941952[0m
+2026-06-02T17:08:51.544690176+00:00 7059(7109) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:189[0m [37m[main_control] _proxy_on_configure_single_thread: got loop=128948272941952, submitting coroutine[0m
+2026-06-02T17:08:51.544764579+00:00 7059(7109) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:198[0m [37m[main_control] _proxy_on_configure_single_thread: coroutine submitted, future=<Future at 0x75470fc11900 state=pending>[0m
+2026-06-02T17:08:51.544772379+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:93[0m [37m[main_control] proxy_on_configure: _proxy_on_configure returned, releasing GIL[0m
+2026-06-02T17:08:51.544784980+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:103[0m [37m[main_control] proxy_on_configure: done[0m
+2026-06-02T17:08:51.544814281+00:00 7059(7110) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:96[0m [37m[message_collector] get_or_start_thread: wait() returned, loop=128948272941952[0m
+2026-06-02T17:08:51.544825681+00:00 7059(7110) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:189[0m [37m[message_collector] _proxy_on_configure_single_thread: got loop=128948272941952, submitting coroutine[0m
+2026-06-02T17:08:51.544857082+00:00 7059(7110) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:198[0m [37m[message_collector] _proxy_on_configure_single_thread: coroutine submitted, future=<Future at 0x75470fc119f0 state=pending>[0m
+2026-06-02T17:08:51.544862182+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:93[0m [37m[message_collector] proxy_on_configure: _proxy_on_configure returned, releasing GIL[0m
+2026-06-02T17:08:51.544879383+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:103[0m [37m[message_collector] proxy_on_configure: done[0m
+2026-06-02T17:08:51.544916684+00:00 7059(7108) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:96[0m [37m[tts] get_or_start_thread: wait() returned, loop=128948272941952[0m
+2026-06-02T17:08:51.544929185+00:00 7059(7108) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:189[0m [37m[tts] _proxy_on_configure_single_thread: got loop=128948272941952, submitting coroutine[0m
+2026-06-02T17:08:51.545012187+00:00 7059(7108) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:198[0m [37m[tts] _proxy_on_configure_single_thread: coroutine submitted, future=<Future at 0x75470fc11ae0 state=pending>[0m
+2026-06-02T17:08:51.545020988+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:93[0m [37m[tts] proxy_on_configure: _proxy_on_configure returned, releasing GIL[0m
+2026-06-02T17:08:51.545036588+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:103[0m [37m[tts] proxy_on_configure: done[0m
+2026-06-02T17:08:51.545069789+00:00 7059(7107) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:96[0m [37m[llm] get_or_start_thread: wait() returned, loop=128948272941952[0m
+2026-06-02T17:08:51.545081490+00:00 7059(7107) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:189[0m [37m[llm] _proxy_on_configure_single_thread: got loop=128948272941952, submitting coroutine[0m
+2026-06-02T17:08:51.545108391+00:00 7059(7107) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:198[0m [37m[llm] _proxy_on_configure_single_thread: coroutine submitted, future=<Future at 0x75470fc11bd0 state=pending>[0m
+2026-06-02T17:08:51.545113091+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:93[0m [37m[llm] proxy_on_configure: _proxy_on_configure returned, releasing GIL[0m
+2026-06-02T17:08:51.545131192+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:103[0m [37m[llm] proxy_on_configure: done[0m
+2026-06-02T17:08:51.545172593+00:00 7059(7111) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:96[0m [37m[streamid_adapter] get_or_start_thread: wait() returned, loop=128948272941952[0m
+2026-06-02T17:08:51.545184893+00:00 7059(7111) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:189[0m [37m[streamid_adapter] _proxy_on_configure_single_thread: got loop=128948272941952, submitting coroutine[0m
+2026-06-02T17:08:51.545213594+00:00 7059(7111) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:198[0m [37m[streamid_adapter] _proxy_on_configure_single_thread: coroutine submitted, future=<Future at 0x75470fc11cc0 state=pending>[0m
+2026-06-02T17:08:51.545218694+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:93[0m [37m[streamid_adapter] proxy_on_configure: _proxy_on_configure returned, releasing GIL[0m
+2026-06-02T17:08:51.545235195+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:103[0m [37m[streamid_adapter] proxy_on_configure: done[0m
+2026-06-02T17:08:51.545268896+00:00 7059(7106) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:96[0m [37m[stt] get_or_start_thread: wait() returned, loop=128948272941952[0m
+2026-06-02T17:08:51.545280597+00:00 7059(7106) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:189[0m [37m[stt] _proxy_on_configure_single_thread: got loop=128948272941952, submitting coroutine[0m
+2026-06-02T17:08:51.545299697+00:00 7059(7106) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:198[0m [37m[stt] _proxy_on_configure_single_thread: coroutine submitted, future=<Future at 0x75470fc11db0 state=pending>[0m
+2026-06-02T17:08:51.545304297+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:93[0m [37m[stt] proxy_on_configure: _proxy_on_configure returned, releasing GIL[0m
+2026-06-02T17:08:51.545318498+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:103[0m [37m[stt] proxy_on_configure: done[0m
+2026-06-02T17:08:51.545585507+00:00 7059(7109) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:112[0m [37m[main_control] _configure_routine: enter for main_control, asyncio_thread=128948067206720[0m
+2026-06-02T17:08:51.545606408+00:00 7059(7109) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:126[0m [37m[main_control] _configure_routine: before on_configure for main_control[0m
+2026-06-02T17:08:51.545611808+00:00 7059(7109) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:132[0m [37m[main_control] _configure_routine: on_configure done, calling on_configure_done for main_control[0m
+2026-06-02T17:08:51.545616708+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[main_control] on_configure() done[0m
+2026-06-02T17:08:51.545656109+00:00 7059(7110) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:112[0m [37m[message_collector] _configure_routine: enter for message_collector, asyncio_thread=128948067206720[0m
+2026-06-02T17:08:51.545664310+00:00 7059(7110) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:126[0m [37m[message_collector] _configure_routine: before on_configure for message_collector[0m
+2026-06-02T17:08:51.545668610+00:00 7059(7110) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:132[0m [37m[message_collector] _configure_routine: on_configure done, calling on_configure_done for message_collector[0m
+2026-06-02T17:08:51.545672710+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[message_collector] on_configure() done[0m
+2026-06-02T17:08:51.545696311+00:00 7059(7108) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:112[0m [37m[tts] _configure_routine: enter for tts, asyncio_thread=128948067206720[0m
+2026-06-02T17:08:51.545705411+00:00 7059(7108) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:126[0m [37m[tts] _configure_routine: before on_configure for tts[0m
+2026-06-02T17:08:51.545720512+00:00 7059(7108) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:132[0m [37m[tts] _configure_routine: on_configure done, calling on_configure_done for tts[0m
+2026-06-02T17:08:51.545724812+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[tts] on_configure() done[0m
+2026-06-02T17:08:51.545730412+00:00 7059(7107) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:112[0m [37m[llm] _configure_routine: enter for llm, asyncio_thread=128948067206720[0m
+2026-06-02T17:08:51.545739712+00:00 7059(7107) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:126[0m [37m[llm] _configure_routine: before on_configure for llm[0m
+2026-06-02T17:08:51.545744112+00:00 7059(7107) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:132[0m [37m[llm] _configure_routine: on_configure done, calling on_configure_done for llm[0m
+2026-06-02T17:08:51.545748613+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[llm] on_configure() done[0m
+2026-06-02T17:08:51.545776713+00:00 7059(7111) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:112[0m [37m[streamid_adapter] _configure_routine: enter for streamid_adapter, asyncio_thread=128948067206720[0m
+2026-06-02T17:08:51.545818515+00:00 7059(7111) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:126[0m [37m[streamid_adapter] _configure_routine: before on_configure for streamid_adapter[0m
+2026-06-02T17:08:51.545827915+00:00 7059(7111) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:132[0m [37m[streamid_adapter] _configure_routine: on_configure done, calling on_configure_done for streamid_adapter[0m
+2026-06-02T17:08:51.545842416+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[streamid_adapter] on_configure() done[0m
+2026-06-02T17:08:51.545879817+00:00 7059(7106) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:112[0m [37m[stt] _configure_routine: enter for stt, asyncio_thread=128948067206720[0m
+2026-06-02T17:08:51.545890317+00:00 7059(7106) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:126[0m [37m[stt] _configure_routine: before on_configure for stt[0m
+2026-06-02T17:08:51.545895718+00:00 7059(7106) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:132[0m [37m[stt] _configure_routine: on_configure done, calling on_configure_done for stt[0m
+2026-06-02T17:08:51.545900418+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[stt] on_configure() done[0m
+2026-06-02T17:08:51.562172371+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[agora_rtc] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.567451751+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[main_control] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.567602156+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[tts] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.569877134+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure[0m@[34mextension.c:677[0m [37m[weatherapi_tool_python] on_configure()[0m
+2026-06-02T17:08:51.569905335+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:55[0m [37m[weatherapi_tool_python] proxy_on_configure: before acquiring GIL[0m
+2026-06-02T17:08:51.569916835+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:65[0m [37m[weatherapi_tool_python] proxy_on_configure: GIL acquired[0m
+2026-06-02T17:08:51.569958836+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:82[0m [37m[weatherapi_tool_python] proxy_on_configure: before calling _proxy_on_configure[0m
+2026-06-02T17:08:51.570165044+00:00 7059(7105) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:173[0m [37m[weatherapi_tool_python] _proxy_on_configure_single_thread: enter, thread=128950462445120[0m
+2026-06-02T17:08:51.570192544+00:00 7059(7105) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:182[0m [37m[weatherapi_tool_python] _proxy_on_configure_single_thread: before get_or_start_thread[0m
+2026-06-02T17:08:51.570206345+00:00 7059(7105) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:53[0m [37m[weatherapi_tool_python] get_or_start_thread: enter, thread=128950462445120[0m
+2026-06-02T17:08:51.570220245+00:00 7059(7105) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:83[0m [37m[weatherapi_tool_python] get_or_start_thread: thread already alive, skipping start[0m
+2026-06-02T17:08:51.570230046+00:00 7059(7105) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:87[0m [37m[weatherapi_tool_python] get_or_start_thread: before _loop_ready_event.wait(), is_set=True[0m
+2026-06-02T17:08:51.570241246+00:00 7059(7105) [32mI[0m [35mget_or_start_thread[0m@[34mglobal_thread_manager.py:96[0m [37m[weatherapi_tool_python] get_or_start_thread: wait() returned, loop=128948272941952[0m
+2026-06-02T17:08:51.570247246+00:00 7059(7105) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:189[0m [37m[weatherapi_tool_python] _proxy_on_configure_single_thread: got loop=128948272941952, submitting coroutine[0m
+2026-06-02T17:08:51.570273847+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[message_collector] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.570305548+00:00 7059(7105) [32mI[0m [35m_proxy_on_configure_single_thread[0m@[34masync_extension.py:198[0m [37m[weatherapi_tool_python] _proxy_on_configure_single_thread: coroutine submitted, future=<Future at 0x75470fc12890 state=pending>[0m
+2026-06-02T17:08:51.570312449+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:93[0m [37m[weatherapi_tool_python] proxy_on_configure: _proxy_on_configure returned, releasing GIL[0m
+2026-06-02T17:08:51.570330949+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mproxy_on_configure[0m@[34mextension.c:103[0m [37m[weatherapi_tool_python] proxy_on_configure: done[0m
+2026-06-02T17:08:51.570337449+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[agora_rtc] on_init()[0m
+2026-06-02T17:08:51.570344050+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[agora_rtc] on_init() done[0m
+2026-06-02T17:08:51.570350050+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[agora_rtc] on_start()[0m
+2026-06-02T17:08:51.570348950+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[stt] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.570676861+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[llm] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.571206279+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[streamid_adapter] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.575627929+00:00 7059(7105) [32mI[0m [36mkey_point[0m [35mon_start[0m@[34mrtc_extension.cc:30[0m [37m[agora_rtc_extension] config: {"agora_asr_full_config":"","agora_asr_hotwords":[],"agora_asr_language":"","agora_asr_session_control_file_path":"","agora_asr_shift_timestamp":false,"agora_asr_vendor_app_id":"","agora_asr_vendor_key":"","agora_asr_vendor_name":"","agora_asr_vendor_region":"","agora_asr_vendor_secret":"","agora_asr_vendor_uri":"","app_certificate":"e523****","app_id":"2ffc7cc71a3748a79a13d5075ad341ea","area_code":-1,"audio_frame_send_delay_ms":100,"audio_scenario":0,"auto_join":true,"channel":"ten_agent_test","datastream_encryption_enabled":false,"enable_agora_asr":false,"enable_asr_log":false,"enable_string_uid":false,"encryption_key":"","encryption_mode":0,"encryption_salt":"","preload_asr_filters":[],"privilege_expire_seconds":86400,"publish_audio":true,"publish_audio_auto_publishing":true,"publish_data":true,"publish_video":false,"publish_video_auto_publishing":true,"publish_video_encoded":false,"publish_video_frame_rate":15,"publish_video_height":480,"publish_video_width":640,"remote_stream_id":123,"remote_user_id":"","sdk_log_file_path":"","sdk_params":"","shift_audio_timestamp":false,"sid":"","stream_id":1234,"subscribe_audio":true,"subscribe_audio_frame_source":"on_playback_before_mixing","subscribe_audio_num_of_channels":1,"subscribe_audio_sample_rate":16000,"subscribe_audio_samples_per_frame":0,"subscribe_remote_stream_ids":[123],"subscribe_remote_user_ids":[],"subscribe_video":false,"subscribe_video_encoded":false,"subscribe_video_pix_fmt":0,"token":"","token_expire_seconds":86400,"unsubscribe_remote_stream_ids":[],"unsubscribe_remote_user_ids":[],"use_frame_counted_audio_timestamp":false,"user_id":""}[0m
+2026-06-02T17:08:51.577485393+00:00 7059(7109) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:138[0m [37m[main_control] _configure_routine: on_configure_done called for main_control, awaiting stop event[0m
+2026-06-02T17:08:51.577505493+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[main_control] on_init()[0m
+2026-06-02T17:08:51.577981810+00:00 7059(7109) [32mI[0m [35mon_init[0m@[34mextension.py:108[0m [37m[main_control] Config12: {
+    "greeting": "您好，请问车牌号多少，今天找哪家公司，有什么事情吗？",
+    "twilio_account_sid": "ACb65306c05477b7976a937a5222ce2c59",
+    "twilio_auth_token": "3f7472ca276c5ae9d27d51d96ef3b5e5",
+    "twilio_from_number": "+61344277485",
+    "twilio_server_port": 9000,
+    "twilio_public_server_url": "https://tiny-easter-overcast.ngrok-free.dev",
+    "twilio_use_https": true,
+    "twilio_use_wss": true
+}[0m
+2026-06-02T17:08:51.578626231+00:00 7059(7109) [32mI[0m [35mon_init[0m@[34mextension.py:112[0m [37m[main_control] Config11: greeting='您好，请问车牌号多少，今天找哪家公司，有什么事情吗？' twilio_account_sid='ACb65306c05477b7976a937a5222ce2c59' twilio_auth_token='3f7472ca276c5ae9d27d51d96ef3b5e5' twilio_from_number='+61344277485' twilio_server_port=9000 twilio_public_server_url='https://tiny-easter-overcast.ngrok-free.dev' twilio_use_https=True twilio_use_wss=True[0m
+2026-06-02T17:08:51.581469728+00:00 7059(7106) [33mW[0m [36mten:runtime[0m [35mten_metadata_flatten_manifest_api_definition[0m@[34mmetadata.c:167[0m [37mFailed to flatten manifest api definition: Failed to read content file from /app/agents/ten_packages/system/ten_ai_base/api/asr-interface.json[0m
+2026-06-02T17:08:51.581488329+00:00 7059(7106) [31mE[0m [36mten:runtime[0m [35mten_metadata_init_schema_store[0m@[34mmetadata.c:209[0m [37mFailed to flatten manifest api definition. base_dir: /app/agents/ten_packages/extension/xfyun_asr_bigmodel_python, app_base_dir: /app/agents/examples/voice-assistant-sip-twilio/tenapp[0m
+2026-06-02T17:08:51.581511930+00:00 7059(7106) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:138[0m [37m[stt] _configure_routine: on_configure_done called for stt, awaiting stop event[0m
+2026-06-02T17:08:51.581516130+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[stt] on_init()[0m
+2026-06-02T17:08:51.583088183+00:00 7059(7110) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:138[0m [37m[message_collector] _configure_routine: on_configure_done called for message_collector, awaiting stop event[0m
+2026-06-02T17:08:51.583110584+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[message_collector] on_init()[0m
+2026-06-02T17:08:51.584696538+00:00 7059(7111) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:138[0m [37m[streamid_adapter] _configure_routine: on_configure_done called for streamid_adapter, awaiting stop event[0m
+2026-06-02T17:08:51.584716839+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[streamid_adapter] on_init()[0m
+2026-06-02T17:08:51.584758840+00:00 7059(7107) [33mW[0m [36mten:runtime[0m [35mten_metadata_flatten_manifest_api_definition[0m@[34mmetadata.c:167[0m [37mFailed to flatten manifest api definition: Failed to read content file from /app/agents/ten_packages/system/ten_ai_base/api/llm-interface.json[0m
+2026-06-02T17:08:51.584767140+00:00 7059(7107) [31mE[0m [36mten:runtime[0m [35mten_metadata_init_schema_store[0m@[34mmetadata.c:209[0m [37mFailed to flatten manifest api definition. base_dir: /app/agents/ten_packages/extension/dify_llm2_python, app_base_dir: /app/agents/examples/voice-assistant-sip-twilio/tenapp[0m
+2026-06-02T17:08:51.584782041+00:00 7059(7107) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:138[0m [37m[llm] _configure_routine: on_configure_done called for llm, awaiting stop event[0m
+2026-06-02T17:08:51.584786041+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[llm] on_init()[0m
+2026-06-02T17:08:51.591385566+00:00 7059(7108) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:138[0m [37m[tts] _configure_routine: on_configure_done called for tts, awaiting stop event[0m
+2026-06-02T17:08:51.591412667+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[tts] on_init()[0m
+2026-06-02T17:08:51.613262310+00:00 7059(7109) [32mI[0m [35m_start_server[0m@[34mextension.py:142[0m [37m[main_control] Started Twilio call server on port 9000 (HTTP + WebSocket)[0m
+2026-06-02T17:08:51.613494218+00:00 7059(7109) [32mI[0m [35m_log_info[0m@[34mserver.py:58[0m [37m[main_control] Starting Twilio Call Server on 0.0.0.0:9000[0m
+2026-06-02T17:08:51.613520819+00:00 7059(7109) [32mI[0m [35m_log_info[0m@[34mserver.py:58[0m [37m[main_control] Server supports both HTTP API and WebSocket media streaming on the same port[0m
+2026-06-02T17:08:51.613527219+00:00 7059(7109) [32mI[0m [35m_log_info[0m@[34mserver.py:58[0m [37m[main_control] SSL/WSS requested - using HTTP server (ngrok will handle SSL termination)[0m
+2026-06-02T17:08:51.624874205+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mset_token_manager[0m@[34mrtc_service.cc:1288[0m [37m[agora_rtc_extension] token manager initialized[0m
+2026-06-02T17:08:51.624898606+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mjoin[0m@[34mrtc_extension.cc:411[0m [37m[agora_rtc_extension] TokenManager initialized with app certificate[0m
+2026-06-02T17:08:51.624902906+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mjoin[0m@[34mrtc_extension.cc:417[0m [37m[agora_rtc_extension] uid_agora_asr_full_config: [0m
+2026-06-02T17:08:51.624905507+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mjoin[0m@[34mrtc_extension.cc:419[0m [37m[agora_rtc_extension] agora_asr_language: [0m
+2026-06-02T17:08:51.624908207+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mgenerate_pull_push_params_from_config[0m@[34mrtc_extension.cc:488[0m [37m[agora_rtc_extension] RtcSubscriptionManager initialized from RtcExtension.[0m
+2026-06-02T17:08:51.624920807+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mset_agora_parameters[0m@[34mrtc_service.cc:185[0m [37m[agora_rtc_extension] sdk_params set: {"rtc.client_type":70}[0m
+2026-06-02T17:08:51.624955508+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mRtcSubscriptionManager[0m@[34mrtc_subscription_manager.cc:25[0m [37m[agora_rtc_extension] RtcSubscriptionManager initializing. String UID mode: false[0m
+2026-06-02T17:08:51.624959008+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mRtcSubscriptionManager[0m@[34mrtc_subscription_manager.cc:48[0m [37m[agora_rtc_extension] Config subscribe_stream_ids: size=1[0m
+2026-06-02T17:08:51.624961408+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mRtcSubscriptionManager[0m@[34mrtc_subscription_manager.cc:50[0m [37m[agora_rtc_extension] Config unsubscribe_stream_ids: size=0[0m
+2026-06-02T17:08:51.624964809+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mRtcSubscriptionManager[0m@[34mrtc_subscription_manager.cc:68[0m [37m[agora_rtc_extension] RtcSubscriptionManager initialized. subscribe_all_configured: false. Subscribe set size: 1, Unsubscribe set size: 0[0m
+2026-06-02T17:08:51.624968809+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mauto_join_channel[0m@[34mrtc_service.cc:322[0m [37m[agora_rtc_extension] auto_join_channel[0m
+2026-06-02T17:08:51.624971409+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mauto_join_channel[0m@[34mrtc_service.cc:361[0m [37m[agora_rtc_extension] role_type is 1[0m
+2026-06-02T17:08:51.625288020+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mauto_join_channel[0m@[34mrtc_service.cc:384[0m [37m[agora_rtc_extension] Generated token for initial connection[0m
+INFO:     Started server process [7059]
+INFO:     Waiting for application startup.
+2026-06-02T17:08:51.635974083+00:00 7059(7110) [32mI[0m [35mon_init[0m@[34mextension.py:28[0m [37m[message_collector] on_init[0m
+2026-06-02T17:08:51.635988484+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[message_collector] on_init() done[0m
+2026-06-02T17:08:51.635999784+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[message_collector] on_start()[0m
+2026-06-02T17:08:51.636012385+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[streamid_adapter] on_init() done[0m
+2026-06-02T17:08:51.636022785+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[streamid_adapter] on_start()[0m
+2026-06-02T17:08:51.636049286+00:00 7059(7107) [32mI[0m [35mon_init[0m@[34mextension.py:34[0m [37m[llm] on_init[0m
+2026-06-02T17:08:51.636069786+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[llm] on_init() done[0m
+2026-06-02T17:08:51.636081687+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[llm] on_start()[0m
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9000 (Press CTRL+C to quit)
+2026-06-02T17:08:51.638074655+00:00 7059(7110) [32mI[0m [35mon_start[0m@[34mextension.py:37[0m [37m[message_collector] on_start[0m
+2026-06-02T17:08:51.638098856+00:00 7059(7110) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[message_collector] on_start() done[0m
+2026-06-02T17:08:51.638102356+00:00 7059(7111) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[streamid_adapter] on_start() done[0m
+2026-06-02T17:08:51.638104356+00:00 7059(7107) [32mI[0m [35mon_start[0m@[34mextension.py:38[0m [37m[llm] on_start[0m
+2026-06-02T17:08:51.638484769+00:00 7059(7108) [32mI[0m [36mkey_point[0m [35mon_init[0m@[34mextension.py:63[0m [37m[tts] XfYunTTS config: app_id='3802d01c' api_key='1540d...8e651' api_secret='NGI1M...2YTA0' voice_name='aisbabyxu' sample_rate=16000 speed=100 volume=50 dump=False dump_path='/tmp' params={'sample_rate': 16000, 'speed': 100, 'volume': 50}[0m
+2026-06-02T17:08:51.638504469+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[tts] on_init() done[0m
+2026-06-02T17:08:51.638511470+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[tts] on_start()[0m
+2026-06-02T17:08:51.638589572+00:00 7059(7107) [32mI[0m [35mon_start[0m@[34mextension.py:51[0m [37m[llm] initialized Dify client: base_url=http://docker-api-1:5001/v1, user_id=TenAgent[0m
+2026-06-02T17:08:51.638597973+00:00 7059(7107) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[llm] on_start() done[0m
+2026-06-02T17:08:51.638798379+00:00 7059(7108) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[tts] on_start() done[0m
+2026-06-02T17:08:51.639230094+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_init[0m@[34mextension.py:95[0m [37m[stt] Xfyun ASR config [provider=xfyun_iat_bigmodel]: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin, sample_rate=16000, channels=1, bit_depth=16, audio_encoding=raw, eos=800ms, dwa=wpgs (credentials: {'provider': 'xfyun_iat_bigmodel', 'app_id': '3...c', 'api_key': '1540d...8e651', 'api_secret': 'NGI1M...2YTA0', 'host': 'iat.xf-yun.com', 'path': '/v1', 'url': 'wss://iat.xf-yun.com/v1', 'domain': 'slm', 'language': 'zh_cn', 'accent': 'mandarin', 'sample_rate': 16000, 'channels': 1, 'bit_depth': 16, 'audio_encoding': 'raw', 'dwa': 'wpgs', 'eos': 800, 'result_encoding': 'utf8', 'result_compress': 'raw', 'result_format': 'json', 'max_audio_seconds': 60, 'dump': False, 'dump_path': '/tmp', 'language_name': 'zh', 'aue': 'raw', 'finalize_mode': 'mute_pkg', 'mute_pkg_duration_ms': 1000, 'dhw': '', 'punc': 1, 'nunum': 1, 'vto': 3000, 'params': {'api_key': '1540d...8e651', 'app_id': '3...c', 'api_secret': 'NGI1M...2YTA0', 'language_name': 'zh', 'language': 'mix'}})[0m
+2026-06-02T17:08:51.639252995+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[stt] on_init() done[0m
+2026-06-02T17:08:51.639260495+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[stt] on_start()[0m
+2026-06-02T17:08:51.639386399+00:00 7059(7106) [32mI[0m [35mon_start[0m@[34masr.py:82[0m [37m[stt] on_start[0m
+2026-06-02T17:08:51.639396200+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:08:51.639400400+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:08:51.639688510+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+2026-06-02T17:08:51.645568910+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mset_agora_parameters[0m@[34mrtc_service.cc:185[0m [37m[agora_rtc_extension] sdk_params set: {"rtc.client_type":70}[0m
+2026-06-02T17:08:51.647586378+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mprepare_to_send[0m@[34mrtc_connection.cc:903[0m [37m[agora_rtc_extension] custom audio_track created[0m
+2026-06-02T17:08:51.647670781+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mprepare_to_send[0m@[34mrtc_connection.cc:933[0m [37m[agora_rtc_extension] audio track published[0m
+2026-06-02T17:08:51.653487679+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mprepare_to_send[0m@[34mrtc_connection.cc:953[0m [37m[agora_rtc_extension] data_stream_id 49153 created[0m
+2026-06-02T17:08:51.653600783+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mprepare_to_recv[0m@[34mrtc_connection.cc:971[0m [37m[agora_rtc_extension] Using RtcSubscriptionManager for subscription logic.[0m
+2026-06-02T17:08:51.653606083+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mapply_audio_subscription_rules[0m@[34mrtc_connection.cc:1406[0m [37m[agora_rtc_extension] Applying audio subscription rules.[0m
+2026-06-02T17:08:51.653610683+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mapply_audio_subscription_rules[0m@[34mrtc_connection.cc:1413[0m [37m[agora_rtc_extension] Clearing audio subscription blocklist.[0m
+2026-06-02T17:08:51.653670585+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mapply_audio_subscription_rules[0m@[34mrtc_connection.cc:1432[0m [37m[agora_rtc_extension] Audio subscription configured for SPECIFIC LIST. Call unsubscribeAllAudio then setSubscribeAudioAllowlist.[0m
+2026-06-02T17:08:51.654008597+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mapply_audio_subscription_rules[0m@[34mrtc_connection.cc:1441[0m [37m[agora_rtc_extension] Setting audio subscription allowlist with 1 users.[0m
+2026-06-02T17:08:51.654116801+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mapply_video_subscription_rules[0m@[34mrtc_connection.cc:1463[0m [37m[agora_rtc_extension] Global video subscription is DISABLED. Call unsubscribeAllVideo.[0m
+2026-06-02T17:08:51.654519614+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mupdate[0m@[34mrtc_connection.cc:73[0m [37m[agora_rtc_extension] Updated local subscription rules: subscribe_all=false, global_audio=true, channel=ten_agent_test[0m
+2026-06-02T17:08:51.654541015+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mconnect[0m@[34mrtc_connection.cc:333[0m [37m[agora_rtc_extension] connect channel ten_agent_test user_id 1234 token 007e****[0m
+2026-06-02T17:08:51.654570516+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mconnect[0m@[34mrtc_connection.cc:379[0m [37m[agora_rtc_extension] Connect to Agora channel(ten_agent_test) with user id(1234), token(007e****)[0m
+2026-06-02T17:08:51.656292375+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[agora_rtc] on_start() done[0m
+2026-06-02T17:08:51.656322876+00:00 7059(7105) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:112[0m [37m[weatherapi_tool_python] _configure_routine: enter for weatherapi_tool_python, asyncio_thread=128948067206720[0m
+2026-06-02T17:08:51.656328776+00:00 7059(7105) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:126[0m [37m[weatherapi_tool_python] _configure_routine: before on_configure for weatherapi_tool_python[0m
+2026-06-02T17:08:51.656333176+00:00 7059(7105) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:132[0m [37m[weatherapi_tool_python] _configure_routine: on_configure done, calling on_configure_done for weatherapi_tool_python[0m
+2026-06-02T17:08:51.656337276+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_configure_done[0m@[34mon_xxx.c:103[0m [37m[weatherapi_tool_python] on_configure() done[0m
+2026-06-02T17:08:51.659878997+00:00 7059(7293) [32mI[0m [36mten:runtime[0m [35monConnecting[0m@[34mconnection_observer.cc:149[0m [37m[agora_rtc_extension] onConnecting: id 0, channelId ten_agent_test, localUserId 1234, state 2, reason 0
+[0m
+2026-06-02T17:08:51.677667302+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_handle_ten_namespace_properties[0m@[34mmetadata.c:346[0m [37m[weatherapi_tool_python] `ten` section is not found in the property, skip[0m
+2026-06-02T17:08:51.681663838+00:00 7059(7105) [32mI[0m [35m_configure_routine[0m@[34masync_extension.py:138[0m [37m[weatherapi_tool_python] _configure_routine: on_configure_done called for weatherapi_tool_python, awaiting stop event[0m
+2026-06-02T17:08:51.681685639+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init[0m@[34mextension.c:709[0m [37m[weatherapi_tool_python] on_init()[0m
+2026-06-02T17:08:51.682057952+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[weatherapi_tool_python] on_init() done[0m
+2026-06-02T17:08:51.682091853+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[weatherapi_tool_python] on_start()[0m
+2026-06-02T17:08:51.682629271+00:00 7059(7105) [32mI[0m [35mon_start[0m@[34mextension.py:109[0m [37m[weatherapi_tool_python] config: WeatherToolConfig(api_key='')[0m
+2026-06-02T17:08:51.682662272+00:00 7059(7105) [32mI[0m [35mon_start[0m@[34mextension.py:116[0m [37m[weatherapi_tool_python] WeatherToolExtension disabled: WEATHERAPI_API_KEY not set (optional).[0m
+2026-06-02T17:08:51.682670772+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[weatherapi_tool_python] on_start() done[0m
+INFO:     Started server process [7054]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+2026-06-02T17:08:52.614048371+00:00 7059(7109) [32mI[0m [35m_start_server[0m@[34mextension.py:149[0m [37m[main_control] Twilio call server started successfully[0m
+2026-06-02T17:08:52.614069171+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:289[0m [37m[main_control] on_init() done[0m
+2026-06-02T17:08:52.614076872+00:00 7059(7109) [33mW[0m [36mten:runtime[0m [35mten_extension_on_init_done[0m@[34mon_xxx.c:300[0m [37m[main_control] on_init() took 1036565 us[0m
+2026-06-02T17:08:52.614083072+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start[0m@[34mextension.c:736[0m [37m[main_control] on_start()[0m
+2026-06-02T17:08:52.614271278+00:00 7059(7109) [32mI[0m [35mon_start[0m@[34mextension.py:273[0m [37m[main_control] [MainControlExtension] on_start[0m
+2026-06-02T17:08:52.614344881+00:00 7059(7109) [32mI[0m [35m_setup_audio_dump_directory[0m@[34mextension.py:487[0m [37m[main_control] Audio dump directory created: /tmp/twilio_audio_dumps[0m
+2026-06-02T17:08:52.614353781+00:00 7059(7109) [32mI[0m [35mon_start[0m@[34mextension.py:280[0m [37m[main_control] WebSocket server is integrated with the main HTTP server[0m
+2026-06-02T17:08:52.614358481+00:00 7059(7109) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[main_control] on_start() done[0m
+2026-06-02T17:08:52.614365481+00:00 7059(7109) [32mI[0m [35m_pre_generate_greeting[0m@[34mextension.py:308[0m [37m[main_control] [MainControlExtension] Pre-generating greeting TTS to file: "您好，请问车牌号多少，今天找哪家公司，有什么事情吗？[0m
+2026-06-02T17:08:53.126375707+00:00 7059(7293) [32mI[0m [36mten:runtime[0m [35monConnected[0m@[34mconnection_observer.cc:68[0m [37m[agora_rtc_extension] onConnected: id 0, channelId ten_agent_test, localUserId 1234, internalUid 1234, state 3, reason 1
+[0m
+2026-06-02T17:08:53.126423809+00:00 7059(7293) [32mI[0m [36mten:runtime[0m [35monConnected[0m@[34mconnection_observer.cc:112[0m [37m[agora_rtc_extension] sid(DB5F6D8B341345CCA964718AB806E75A)[0m
+2026-06-02T17:08:53.126427509+00:00 7059(7293) [32mI[0m [36mten:runtime[0m [35monConnected[0m@[34mconnection_observer.cc:114[0m [37m[agora_rtc_extension] cid(-179977774)[0m
+2026-06-02T17:08:53.126449209+00:00 7059(7105) [32mI[0m [36mten:runtime[0m [35moperator()[0m@[34mrtc_extension.cc:40[0m [37m[agora_rtc_extension] join connect callback, connected 1[0m
+2026-06-02T17:08:53.126720719+00:00 7059(7105) [33mW[0m [36mten:runtime[0m [35mten_env_send_msg_internal[0m@[34msend.c:163[0m [37mFailed to send message: Failed to find destination of a 'cmd' message 'on_connected' from graph.[0m
+2026-06-02T17:08:53.126746120+00:00 7059(7105) [33mW[0m [36mten:runtime[0m [35mten_env_send_msg_internal[0m@[34msend.c:163[0m [37mFailed to send message: Failed to find destination of a 'cmd' message 'onVideoPublishStateChanged' from graph.[0m
+2026-06-02T17:08:53.132695322+00:00 7059(7293) [32mI[0m [36mten:runtime[0m [35monAudioTrackPublishSuccess[0m@[34mlocal_user_observer.cc:81[0m [37m[agora_rtc_extension] onAudioTrackPublishSuccess[0m
+2026-06-02T17:08:53.132719523+00:00 7059(7105) [33mW[0m [36mten:runtime[0m [35mten_env_send_msg_internal[0m@[34msend.c:163[0m [37mFailed to send message: Failed to find destination of a 'cmd' message 'onAudioPublishStateChanged' from graph.[0m
+2026-06-02T17:08:53.433286052+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:08:53.433319053+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:08:53.433352954+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:08:53.433358955+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:08:53.433415857+00:00 7059(7106) [32mI[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:389[0m [37m[stt] on_start() done[0m
+2026-06-02T17:08:53.433430757+00:00 7059(7106) [33mW[0m [36mten:runtime[0m [35mten_extension_on_start_done[0m@[34mon_xxx.c:400[0m [37m[stt] on_start() took 1794165 us[0m
+2026-06-02T17:08:54.469334613+00:00 7059(7109) [32mI[0m [35m_pre_generate_greeting[0m@[34mextension.py:346[0m [37m[main_control] [MainControlExtension] Greeting TTS saved to file: /tmp/greeting_audio.pcm (148480 bytes, 4.6s, speed=100)[0m
+   ▲ Next.js 14.0.0
+   - Local:        http://localhost:3000
+
+2026-06-02T17:08:56.647722651+00:00 7059(7106) [33mW[0m [36mten:runtime[0m [35mten_env_send_msg_internal[0m@[34msend.c:163[0m [37mFailed to send message: Failed to find destination of a 'data' message 'metrics' from graph.[0m
+2026-06-02T17:08:56.647754852+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:01.646431308+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:01.658121090+00:00 7059(7293) [32mI[0m [36mten:runtime[0m [35monReconnecting[0m@[34mconnection_observer.cc:159[0m [37m[agora_rtc_extension] onReconnecting: id 0, channelId ten_agent_test, localUserId 1234, state 4, reason 2
+[0m
+2026-06-02T17:09:02.506854456+00:00 7059(7293) [32mI[0m [36mten:runtime[0m [35monReconnected[0m@[34mconnection_observer.cc:169[0m [37m[agora_rtc_extension] onReconnected: id 0, channelId ten_agent_test, localUserId 1234, state 3, reason 15
+[0m
+ ✓ Ready in 10s
+2026-06-02T17:09:06.646577466+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:09.434685373+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:09:09.434734175+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:09:09.434742575+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:09:09.434747075+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:09:09.734540389+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:09:09.734570290+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:09:09.734768998+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+2026-06-02T17:09:11.555966548+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:09:11.555997249+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:09:11.556004849+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:09:11.556010349+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:09:11.646527256+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:16.646405860+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:21.646588924+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+ ○ Compiling /page ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+2026-06-02T17:09:26.646064865+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+2026-06-02T17:09:27.558146812+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:09:27.558183214+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:09:27.558190514+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:09:27.558196214+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:09:27.858985299+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:09:27.859014900+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:09:27.859173606+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+ ✓ Compiled /page in 6.5s (465 modules)
+ ✓ Compiled in 405ms (245 modules)
+2026-06-02T17:09:29.739161165+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:09:29.739199767+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:09:29.739209767+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:09:29.739216467+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:09:31.645702722+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:36.645907670+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:41.646255046+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:45.738374420+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:09:45.738405221+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:09:45.738410521+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:09:45.738414021+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:09:46.039238411+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:09:46.039269012+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:09:46.039434418+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+2026-06-02T17:09:46.646798219+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:47.972632931+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:09:47.972665132+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:09:47.972672633+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:09:47.972678633+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:09:51.646740463+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:09:56.647019817+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:01.646285616+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:03.972120366+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:10:03.972146467+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:10:03.972151867+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:10:03.972155767+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:10:04.271938449+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:10:04.271967750+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:10:04.272128555+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+2026-06-02T17:10:06.085407034+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:10:06.085439335+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:10:06.085446935+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:10:06.085453035+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:10:06.646017401+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:11.646436217+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:16.646049063+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:21.646132851+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:22.086186854+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:10:22.086216755+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:10:22.086221955+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:10:22.086225555+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:10:22.386085810+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:10:22.386129211+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:10:22.386271216+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+2026-06-02T17:10:24.163160691+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:10:24.163190892+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:10:24.163198692+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:10:24.163204292+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:10:26.645988315+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:31.645439144+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:36.645368693+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:40.236517186+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:10:40.236543887+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:10:40.236549788+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:10:40.236554188+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:10:40.536324154+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:10:40.536351555+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:10:40.536537362+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+2026-06-02T17:10:41.645715079+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:44.622481709+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:10:44.622519211+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:10:44.622528511+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:10:44.622536311+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:10:46.645127651+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:51.645136226+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:10:56.645196073+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:11:00.599654356+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:11:00.599689657+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:11:00.599714158+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:11:00.599724958+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:11:00.899471269+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:11:00.899501770+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:11:00.899680676+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+Task was destroyed but it is pending!
+task: <Task pending name='Task-49' coro=<XfyunWSRecognition._consume_and_send() done, defined at /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/xfyun_asr_bigmodel_python/recognition.py:392> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Task was destroyed but it is pending!
+task: <Task pending name='Task-52' coro=<XfyunWSRecognition._consume_and_send() done, defined at /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/xfyun_asr_bigmodel_python/recognition.py:392> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Task was destroyed but it is pending!
+task: <Task pending name='Task-55' coro=<XfyunWSRecognition._consume_and_send() done, defined at /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/xfyun_asr_bigmodel_python/recognition.py:392> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Task was destroyed but it is pending!
+task: <Task pending name='Task-58' coro=<XfyunWSRecognition._consume_and_send() done, defined at /app/agents/examples/voice-assistant-sip-twilio/tenapp/ten_packages/extension/xfyun_asr_bigmodel_python/recognition.py:392> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2026-06-02T17:11:01.644318845+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:11:04.832835035+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:11:04.832872636+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:11:04.832880436+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:11:04.832886036+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:11:06.645048088+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:11:11.645517570+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:11:16.645720667+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:11:20.834892201+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_close[0m@[34mextension.py:432[0m [37m[stt] vendor_status_changed: on_close[0m
+2026-06-02T17:11:20.834922503+00:00 7059(7106) [32mI[0m [35mon_close[0m@[34mextension.py:438[0m [37m[stt] Xfyun ASR session metrics: audio_frame_received=0, audio_frame_sent_to_asr=0, actual_send=0 (>0=False)[0m
+2026-06-02T17:11:20.834928103+00:00 7059(7106) [33mW[0m [35mon_close[0m@[34mextension.py:448[0m [37m[stt] Xfyun ASR connection closed unexpectedly. Reconnecting...[0m
+2026-06-02T17:11:20.834931803+00:00 7059(7106) [33mW[0m [35mhandle_reconnect[0m@[34mreconnect_manager.py:95[0m [37m[stt] Attempting reconnection #1/5 after 0.3 seconds delay...[0m
+2026-06-02T17:11:21.135736017+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:127[0m [37m[stt] Starting Xfyun ASR connection [provider=xfyun_iat_bigmodel][0m
+2026-06-02T17:11:21.135762617+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:200[0m [37m[stt] Xfyun ASR [provider=xfyun_iat_bigmodel] connecting to wss://iat.xf-yun.com/v1 domain=slm language=zh_cn accent=mandarin sample_rate=16000 channels=1 bit_depth=16 audio_encoding=raw eos=800ms[0m
+2026-06-02T17:11:21.135949924+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:328[0m [37m[stt] Xfyun ASR connecting to: wss://iat.xf-yun.com/v1?authorization=***&host=iat.xf-yun.com&date=***[0m
+2026-06-02T17:11:21.645269887+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:11:22.983962920+00:00 7059(7106) [32mI[0m [35mstart[0m@[34mrecognition.py:341[0m [37m[stt] Xfyun ASR WebSocket connected successfully[0m
+2026-06-02T17:11:22.983995921+00:00 7059(7106) [32mI[0m [36mvendor[0m [35mon_open[0m@[34mextension.py:250[0m [37m[stt] vendor_status_changed: on_open[0m
+2026-06-02T17:11:22.984003721+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35mon_open[0m@[34mextension.py:279[0m [37m[stt] Xfyun ASR connection verified: host=iat.xf-yun.com, path=/v1, domain=slm, language=zh_cn, accent=mandarin[0m
+2026-06-02T17:11:22.984009421+00:00 7059(7106) [32mI[0m [35mstart_connection[0m@[34mextension.py:223[0m [37m[stt] Xfyun ASR connection started successfully[0m
+2026-06-02T17:11:26.645124640+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m
+2026-06-02T17:11:31.645058660+00:00 7059(7106) [32mI[0m [36mkey_point[0m [35m_send_asr_metrics[0m@[34masr.py:404[0m [37m[stt] send asr_metrics: id='' module='asr' vendor='xfyun_bigmodel' metrics={'actual_send': 0, 'actual_send_delta': 0} metadata={}[0m

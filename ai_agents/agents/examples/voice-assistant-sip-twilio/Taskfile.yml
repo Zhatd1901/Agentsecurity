@@ -26,13 +26,21 @@ tasks:
     cmds:
       - ./scripts/install_python_deps.sh
 
+  install-server-deps:
+    desc: install Twilio server Python dependencies (fastapi, uvicorn, twilio)
+    internal: true
+    dir: ./server
+    cmds:
+      - pip3 install -r requirements.txt
+
   install:
-    desc: install dependencies
+    desc: install all dependencies
     dir: ./tenapp
     cmds:
       - task: install-tenapp
       - task: install-tenapp-python-deps
       - task: install-frontend
+      - task: install-server-deps
 
   # run scripts
   run-tenapp:
@@ -55,12 +63,13 @@ tasks:
 
   run-api-server:
     desc: run standalone Twilio HTTP server
+    deps: [install-server-deps]
     dir: ./server
     cmds:
       - python3 main.py --tenapp-dir ../tenapp
 
   run-ngrok:
-    desc: run ngrok tunnel for WSS support
+    desc: run ngrok tunnel for WSS support (gracefully skips if not installed)
     dir: ./
     cmds:
       - ./start-with-ngrok.sh
