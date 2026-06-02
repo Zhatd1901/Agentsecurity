@@ -270,6 +270,7 @@ workflow:
         sourceType: if-else
         targetType: http-request
       id: 1780317546650-a88a1d3f-7448-4497-b136-ab5430080108-17803175807920-target
+      selected: false
       source: '1780317546650'
       sourceHandle: a88a1d3f-7448-4497-b136-ab5430080108
       target: '17803175807920'
@@ -281,6 +282,7 @@ workflow:
         sourceType: if-else
         targetType: http-request
       id: 1780317546650-false-17803240161400-target
+      selected: false
       source: '1780317546650'
       sourceHandle: 'false'
       target: '17803240161400'
@@ -300,7 +302,7 @@ workflow:
             value: "{\n  \"text\": \"您有新的访客请求待处理!（您后续还有{{#1780244312460.waiting_count#}}条待处理）\\\
               n当前待处理访客记录:\\n车牌号：{{#1780244312460.license_plate#}}\\n到访时间：{{#1780244312460.entry_time#}}\\\
               n到访事由：{{#1780244312460.purpose#}}\\n单位/公司：{{#1780244312460.company#}}\\\
-              n手机号：{{#1780244312460.phone#}}\n}"
+              n手机号：{{#1780244312460.phone#}}\\n访客姓名：{{#1780244312460.name#}}\"\n}"
           type: json
         desc: ''
         headers: Content-Type:application/json
@@ -392,7 +394,7 @@ workflow:
       positionAbsolute:
         x: 1540.7958626187685
         y: 0
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -443,12 +445,13 @@ workflow:
           \ Dify 输出变量 String\n    license_plate = str(data.get(\"license_plate\",\
           \ \"\"))\n    entry_time = str(data.get(\"entry_time\", \"\"))\n    purpose\
           \ = str(data.get(\"purpose\", \"\"))\n    company = str(data.get(\"company\"\
-          , \"\"))\n    phone = str(data.get(\"phone\", \"\"))\n    pending_count\
-          \ = str(data.get(\"pending_count\", \"0\"))\n    waiting_count = str(data.get(\"\
-          waiting_count\", \"0\"))\n\n    return {\n        \"waiting_count\": waiting_count,\n\
-          \        \"license_plate\": license_plate,\n        \"entry_time\": entry_time,\n\
-          \        \"purpose\": purpose,\n        \"company\": company,\n        \"\
-          phone\": phone,\n        \"pending_count\": pending_count\n    }"
+          , \"\"))\n    phone = str(data.get(\"phone\", \"\"))\n    name = str(data.get(\"\
+          name\", \"\"))\n    pending_count = str(data.get(\"pending_count\", \"0\"\
+          ))\n    waiting_count = str(data.get(\"waiting_count\", \"0\"))\n\n    return\
+          \ {\n        \"waiting_count\": waiting_count,\n        \"license_plate\"\
+          : license_plate,\n        \"entry_time\": entry_time,\n        \"purpose\"\
+          : purpose,\n        \"company\": company,\n        \"phone\": phone,\n \
+          \       \"name\": name,\n        \"pending_count\": pending_count\n    }"
         code_language: python3
         outputs:
           company:
@@ -458,6 +461,9 @@ workflow:
             children: null
             type: string
           license_plate:
+            children: null
+            type: string
+          name:
             children: null
             type: string
           pending_count:
@@ -543,20 +549,24 @@ workflow:
           \ dict):\n        data = {}\n\n    # 当前已确认访客\n    license_plate = str(data.get(\"\
           license_plate\", \"\"))\n    entry_time = str(data.get(\"entry_time\", \"\
           \"))\n    purpose = str(data.get(\"purpose\", \"\"))\n    company = str(data.get(\"\
-          company\", \"\"))\n    phone = str(data.get(\"phone\", \"\"))\n\n\n    #\
-          \ 队列数量\n    pending_count = str(data.get(\"pending_count\", \"0\"))\n  \
-          \  waiting_count = str(data.get(\"waiting_count\", pending_count))\n\n \
-          \   # 下一条待确认访客\n    next_license_plate = str(data.get(\"next_license_plate\"\
+          company\", \"\"))\n    phone = str(data.get(\"phone\", \"\"))\n    name\
+          \ = str(data.get(\"name\", \"\"))\n\n    # 队列数量\n    pending_count = str(data.get(\"\
+          pending_count\", \"0\"))\n    waiting_count = str(data.get(\"waiting_count\"\
+          , pending_count))\n\n    # 如果 license_plate = -1，则 pending_count = -1\n\
+          \    if license_plate == \"-1\":\n        pending_count = \"-1\"\n\n   \
+          \ # 下一条待确认访客\n    next_license_plate = str(data.get(\"next_license_plate\"\
           , \"\"))\n    next_entry_time = str(data.get(\"next_entry_time\", \"\"))\n\
           \    next_purpose = str(data.get(\"next_purpose\", \"\"))\n    next_company\
           \ = str(data.get(\"next_company\", \"\"))\n    next_phone = str(data.get(\"\
-          next_phone\", \"\"))\n\n\n    return {\n        \"pending_count\": pending_count,\n\
-          \        \"waiting_count\": waiting_count,\n\n        \"license_plate\"\
-          : license_plate,\n        \"entry_time\": entry_time,\n        \"purpose\"\
-          : purpose,\n        \"company\": company,\n        \"phone\": phone,\n\n\
-          \        \"next_phone\": next_phone,\n        \"next_company\": next_company,\n\
-          \        \"next_purpose\": next_purpose,\n        \"next_entry_time\": next_entry_time,\n\
-          \        \"next_license_plate\": next_license_plate\n    }"
+          next_phone\", \"\"))\n    next_name = str(data.get(\"next_name\", \"\"))\n\
+          \n    return {\n        \"pending_count\": pending_count,\n        \"waiting_count\"\
+          : waiting_count,\n\n        \"license_plate\": license_plate,\n        \"\
+          entry_time\": entry_time,\n        \"purpose\": purpose,\n        \"company\"\
+          : company,\n        \"phone\": phone,\n        \"name\": name,\n\n     \
+          \   \"next_name\": next_name,\n        \"next_phone\": next_phone,\n   \
+          \     \"next_company\": next_company,\n        \"next_purpose\": next_purpose,\n\
+          \        \"next_entry_time\": next_entry_time,\n        \"next_license_plate\"\
+          : next_license_plate\n    }"
         code_language: python3
         outputs:
           company:
@@ -568,6 +578,9 @@ workflow:
           license_plate:
             children: null
             type: string
+          name:
+            children: null
+            type: string
           next_company:
             children: null
             type: string
@@ -575,6 +588,9 @@ workflow:
             children: null
             type: string
           next_license_plate:
+            children: null
+            type: string
+          next_name:
             children: null
             type: string
           next_phone:
@@ -629,7 +645,8 @@ workflow:
             value: "{\n  \"text\": \"以下访客信息已完成确认！（您后续还有{{#1780248056143.pending_count#}}条待处理）\\\
               n\\n车牌号：{{#1780248056143.license_plate#}}\\n到访时间：{{#1780248056143.entry_time#}}\\\
               n到访事由：{{#1780248056143.purpose#}}\\n单位/公司：{{#1780248056143.company#}}\\\
-              n手机号：{{#1780248056143.phone#}}\\n\\n回复“删除：原因”删除该登记。\"\n}"
+              n手机号：{{#1780248056143.phone#}}\\n访客姓名：{{#1780248056143.name#}}\\n\\\
+              n回复“删除：原因”删除该登记。\"\n}"
           type: json
         desc: ''
         headers: Content-Type:application/json
@@ -775,6 +792,9 @@ workflow:
             children: null
             type: string
           license_plate:
+            children: null
+            type: string
+          name:
             children: null
             type: string
           pending_count:
@@ -1144,10 +1164,10 @@ workflow:
       id: '1780317546650'
       position:
         x: 2467.1390084953186
-        y: -83.08547930496772
+        y: -84.28961668619914
       positionAbsolute:
         x: 2467.1390084953186
-        y: -83.08547930496772
+        y: -84.28961668619914
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1162,7 +1182,7 @@ workflow:
           - id: key-value-710
             key: ''
             type: text
-            value: "{\n  \"text\": \"暂无访客需要登记\"\n}"
+            value: "{\n  \"text\": \"暂无访客登记需要确认\"\n}"
           type: json
         desc: ''
         headers: Content-Type:application/json
@@ -1192,7 +1212,7 @@ workflow:
       positionAbsolute:
         x: 3009.1706221228337
         y: -58.109854447094435
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -1206,10 +1226,11 @@ workflow:
           - id: key-value-710
             key: ''
             type: text
-            value: "{\n  \"text\": \"以下访客信息已完成确认！\\n车牌号：{{#1780248056143.license_plate#}}\\\
-              n手机号：{{#1780248056143.phone#}}\\n到访时间：{{#1780248056143.entry_time#}}\\\
-              n\\n——————————\\n\\n\U0001F4CC 下一条待确认访客（剩余{{#1780248056143.pending_count#}}条）：\\\
-              n\\n手机号：{{#1780248056143.next_phone#}}\\n车牌号：{{#1780248056143.next_license_plate#}}\\\
+            value: "{\n  \"text\": \"以下访客信息已完成确认！\\n访客姓名：{{#1780248056143.name#}}\\\
+              n车牌号：{{#1780248056143.license_plate#}}\\n手机号：{{#1780248056143.phone#}}\\\
+              n到访时间：{{#1780248056143.entry_time#}}\\n\\n——————————\\n\\n\U0001F4CC\
+              \ 下一条待确认访客（剩余{{#1780248056143.pending_count#}}条）：\\n\\n访客姓名：{{#1780248056143.next_name#}}\\\
+              n手机号：{{#1780248056143.next_phone#}}\\n车牌号：{{#1780248056143.next_license_plate#}}\\\
               n到访时间：{{#1780248056143.next_entry_time#}}\\n到访事由：{{#1780248056143.next_purpose#}}\\\
               n单位/公司：{{#1780248056143.next_company#}}\\n\\n回复“删除：原因”删除该登记。\"\n}"
           type: json
@@ -1247,7 +1268,7 @@ workflow:
       type: custom
       width: 242
     viewport:
-      x: -623.8718647356895
-      y: 448.31928778249835
+      x: -1362.9997448779577
+      y: 431.2256066995478
       zoom: 0.8304700240908939
   rag_pipeline_variables: []
