@@ -14,7 +14,7 @@
 
 ## 📖 项目简介
 
-是一套基于 TEN Framework 构建的 AI 语音代理安全管理系统。通过 Twilio 接入电话，利用 Deepgram 进行语音识别（STT）、科大讯飞进行语音合成（TTS），结合 Dify LLM 平台实现访客信息智能收集，最终通过微信推送至管理员进行确认，形成完整的"来电 → AI 对话 → 信息采集 → 人工审核"闭环。
+**代理2001** 是一套基于 TEN Framework 构建的 AI 语音代理安全管理系统。通过 Twilio 接入电话，利用 Deepgram 进行语音识别（STT）、科大讯飞进行语音合成（TTS），结合 Dify LLM 平台实现访客信息智能收集，最终通过微信推送至管理员进行确认，形成完整的"来电 → AI 对话 → 信息采集 → 人工审核"闭环。
 
 **核心数据流:**
 
@@ -26,7 +26,7 @@ Twilio 来电 → STT 语音识别 → Dify Chatflow 智能对话收集信息 �
 
 ## 🏗️ 系统架构图
 
-![System Architecture Diagram](System Architecture Diagram.png)
+![System Architecture Diagram](System%20Architecture%20Diagram.png)
 
 ---
 
@@ -84,7 +84,51 @@ Twilio 来电 → STT 语音识别 → Dify Chatflow 智能对话收集信息 �
 | **ESP32-S3-Korvo-V3** | 乐鑫官方语音开发板，集成麦克风阵列与音频编解码器，适合作为边缘语音终端。 |
 | **ReSpeaker XVF3800** | XMOS 语音处理器，支持远场拾音与 AEC 回声消除，配合 XIAO ESP32S3 使用。 |
 
+---
 
+## 📐 项目架构总览
+
+```
+┌──────────┐    SIP/WebRTC     ┌──────────────────┐    HTTP/SSE     ┌──────────────┐
+│  Twilio  │ ◄──────────────► │  TEN Framework    │ ◄─────────────► │ Dify Chatflow│
+│ 电话接入 │                  │ voice-assistant   │                │ 访客信息收集 │
+└──────────┘                   └──────┬───────────┘                └──────┬───────┘
+                                      │                                    │
+                                      │ Go API Server                      │ HTTP POST
+                                      │ localhost:8080                     │ /api/visitors/create
+                                      ▼                                    ▼
+                              ┌──────────────┐                  ┌─────────────────┐
+                              │  Playground  │                  │ FastAPI 中间件   │
+                              │ Next.js UI   │                  │ localhost:8000   │
+                              │ port:3000    │                  │ Dify↔DB↔Workflow │
+                              └──────────────┘                  └───────┬─────────┘
+                                                                         │
+                                                                         │ SQLite
+                                                                         ▼
+                                                                ┌────────────────┐
+                                                                │   SQLite DB    │
+                                                                │ visitors 表    │
+                                                                │ status 队列    │
+                                                                └───────┬────────┘
+                                                                        │
+                                                                        │ create 成功后触发
+                                                                        │ action=new_visitor_created
+                                                                        ▼
+                                                                ┌────────────────┐
+                                                                │ Dify Workflow  │
+                                                                │ 队列调度/推送  │
+                                                                └───────┬────────┘
+                                                                        │
+                                                                        │ HTTP POST
+                                                                        │ /api/wechat/send
+                                                                        ▼
+┌──────────┐    ilink API      ┌──────────────────┐    HTTP/API      ┌─────────────────┐
+│ 微信 App │ ◄──────────────► │  WeChat Bridge    │ ◄─────────────► │ FastAPI / Clawbot│
+│ 个人微信 │                  │ Node.js 桥接      │                │ 微信发送与回调   │
+└──────────┘                   └──────────────────┘                └─────────────────┘
+```
+
+---
 
 ## 组件清单与启动方式
 
