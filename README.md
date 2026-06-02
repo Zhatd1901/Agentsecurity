@@ -26,7 +26,7 @@ Twilio 来电 → STT 语音识别 → Dify Chatflow 智能对话收集信息 �
 
 ## 🏗️ 系统架构图
 
-![System Architecture Diagram](System Architecture Diagram.png)
+![System Architecture Diagram](System-Architecture-Diagram.png)
 
 ---
 
