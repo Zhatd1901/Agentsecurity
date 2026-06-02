@@ -76,11 +76,17 @@ class XfyunWSRecognition:
 
         # Set default configuration
         default_config = {
-            "host": "ist-api.xfyun.cn",
-            "domain": "ist_cbm_mix",
-            "language": "mix",
+            "host": "iat.xf-yun.com",
+            "path": "/v1",
+            "domain": "slm",
+            "language": "zh_cn",
             "accent": "mandarin",
             "dwa": "wpgs",
+            "eos": 800,  # 对话场景建议值，官方示例 6000
+            "samplerate": 16000,
+            "channels": 1,
+            "bit_depth": 16,
+            "audio_encoding": "raw",
         }
 
         # Merge user configuration and default configuration
@@ -157,17 +163,18 @@ class XfyunWSRecognition:
         self.ten_env.log_debug(message)
 
     def _create_url(self):
-        """Generate WebSocket connection URL"""
-        url = f"wss://{self.host}/v2/ist"
+        """Generate WebSocket connection URL for IAT 中英识别大模型 API"""
+        path = self.config.get("path", "/v1")
+        url = f"wss://{self.host}{path}"
 
         # Generate RFC1123 format timestamp
         now = datetime.now()
         date = format_date_time(mktime(now.timetuple()))
 
-        # Concatenate string
+        # Concatenate string for HMAC signature
         signature_origin = f"host: {self.host}\n"
         signature_origin += f"date: {date}\n"
-        signature_origin += "GET /v2/ist HTTP/1.1"
+        signature_origin += f"GET {path} HTTP/1.1"
 
         # Encrypt using hmac-sha256
         signature_sha = hmac.new(
@@ -188,38 +195,97 @@ class XfyunWSRecognition:
         return url
 
     async def _handle_message(self, message):
-        """Handle WebSocket message"""
+        """Handle WebSocket message (IAT 中英识别大模型 response format)
+
+        Official response structure:
+        {
+          "header": {"code": 0, "message": "success", "sid": "xxx", "status": 0|1|2},
+          "payload": {
+            "result": {
+              "text": "<base64>",  # decoded: {"sn":1, "ls":bool, "ws":[...], "pgs":"apd"|"rpl"}
+              "seq": 1,
+              "status": 0|1|2
+            }
+          }
+        }
+
+        Key fields for sentence final detection:
+        - payload.result.text (base64 JSON) → inner.ls: true = sentence complete
+        - header.status == 2: entire session complete
+        - payload.result.status == 2: final result
+        """
         try:
             message_data = json.loads(message)
-            code = message_data.get("code")
-            sid = message_data.get("sid")
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
-            self._log_debug(f"[{timestamp}] message: {message}")
+            header = message_data.get("header", {})
+            code = header.get("code")
+            sid = header.get("sid")
+            header_status = header.get("status", -1)
 
-            if self.ten_env:
-                self.ten_env.log_debug(
-                    f"vendor_result: on_recognized: {message}",
-                    category=LOG_CATEGORY_VENDOR,
-                )
+            # ALWAYS log response at INFO for debugging sentence boundary
+            self.ten_env.log_info(
+                f"[IAT RESP] code={code} sid={sid} header_status={header_status} "
+                f"raw_first_200={str(message)[:200]}"
+            )
 
             if code != 0:
-                error_msg = message_data.get("message")
-                self._log_debug(
-                    f"[{timestamp}] sid: {sid} call error: {error_msg}, code: {code}"
+                error_msg = header.get("message", "Unknown error")
+                self.ten_env.log_error(
+                    f"[IAT ERR] sid={sid} code={code} message={error_msg}"
                 )
                 if self.callback:
-                    self._log_debug(f"[{timestamp}] Calling callback.on_error")
                     await self.callback.on_error(error_msg, code)
-            else:
-                if self.callback:
-                    self._log_debug(f"[{timestamp}] Calling callback.on_result")
-                    await self.callback.on_result(message_data)
+                return
+
+            if not self.callback:
+                return
+
+            # Parse nested result
+            payload = message_data.get("payload", {})
+            result_payload = payload.get("result", {})
+            text_b64 = result_payload.get("text", "")
+            result_status = result_payload.get("status", -1)
+
+            # Decode base64 inner JSON
+            inner_data = {}
+            if text_b64:
+                try:
+                    inner_json_str = base64.b64decode(text_b64).decode("utf-8")
+                    inner_data = json.loads(inner_json_str)
+                except Exception as e:
+                    self.ten_env.log_warn(f"[IAT] Failed to decode result.text: {e}")
+
+            # ---- Official final detection ----
+            # 1. inner.ls == True  → 当前句子结束
+            # 2. result_status == 2 → 整个识别会话结束
+            # 3. header_status == 2 → 整个会话结束
+            ls_value = inner_data.get("ls", False)
+            is_sentence_end = (ls_value is True)
+            is_session_end = (result_status == 2 or header_status == 2)
+
+            # Map to legacy format
+            inner_data["sub_end"] = is_sentence_end
+
+            self.ten_env.log_info(
+                f"[IAT RESULT] ls={ls_value} is_sentence_end={is_sentence_end} "
+                f"result_status={result_status} header_status={header_status} "
+                f"is_session_end={is_session_end} "
+                f"sn={inner_data.get('sn', -1)} pgs={inner_data.get('pgs', 'none')} "
+                f"text_len={len(inner_data.get('ws', []))}"
+            )
+
+            legacy_message = {
+                "code": code,
+                "sid": sid,
+                "data": {
+                    "status": result_status if result_status >= 0 else header_status,
+                    "result": inner_data,
+                },
+            }
+            await self.callback.on_result(legacy_message)
 
         except Exception as e:
             error_msg = f"Error processing message: {e}"
-            self._log_debug(
-                f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {error_msg}"
-            )
+            self.ten_env.log_error(f"[IAT] {error_msg}")
             if self.callback:
                 await self.callback.on_error(error_msg)
 
@@ -257,7 +323,10 @@ class XfyunWSRecognition:
 
         try:
             ws_url = self._create_url()
-            self._log_debug(f"Connecting to: {ws_url}")
+            # Log masked URL (hide signature for security)
+            masked_url = ws_url.split("?")[0] + "?authorization=***&host=" + self.host + "&date=***"
+            self.ten_env.log_info(f"Xfyun ASR connecting to: {masked_url}")
+            self._log_debug(f"Full URL: {ws_url}")
 
             # Create SSL context that doesn't verify certificates (similar to original)
             ssl_context = ssl.create_default_context()
@@ -269,6 +338,7 @@ class XfyunWSRecognition:
                 ws_url, ssl=ssl_context, open_timeout=timeout
             )
 
+            self.ten_env.log_info("Xfyun ASR WebSocket connected successfully")
             self._log_debug("### WebSocket opened ###")
             self.is_first_frame = True
             self.is_started = True
@@ -286,13 +356,20 @@ class XfyunWSRecognition:
             return True
 
         except asyncio.TimeoutError:
-            error_msg = f"Connection timeout after {timeout} seconds"
+            path = self.config.get("path", "/v1")
+            error_msg = (
+                f"Connection timeout after {timeout}s to wss://{self.host}{path}. "
+                f"Check: 1) Network reachable? 2) App ID has '中英识别大模型' service enabled? "
+                f"3) Credentials correct?"
+            )
+            self.ten_env.log_error(error_msg)
             self._log_debug(f"Failed to start recognition: {error_msg}")
             if self.callback:
                 await self.callback.on_error(error_msg, TIMEOUT_CODE)
             return False
         except Exception as e:
             error_msg = f"Failed to start recognition: {e}"
+            self.ten_env.log_error(error_msg)
             self._log_debug(error_msg)
             if self.callback:
                 await self.callback.on_error(error_msg)
@@ -313,8 +390,12 @@ class XfyunWSRecognition:
                 )
 
     async def _consume_and_send(self):
-        """Consumer loop: pull chunks from buffer and send over websocket."""
+        """Consumer loop: pull chunks from buffer and send over websocket (IAT protocol)."""
         sample_rate = self.config.get("samplerate", 16000)
+        channels = self.config.get("channels", 1)
+        bit_depth = self.config.get("bit_depth", 16)
+        audio_encoding = self.config.get("audio_encoding", "raw")
+        seq = 0
         try:
             while True:
                 chunk = await self.audio_buffer.pull_chunk()
@@ -322,29 +403,62 @@ class XfyunWSRecognition:
                     # EOF after close and buffer drained
                     break
 
-                # Build payload based on frame status
+                seq += 1
+                audio_b64 = str(base64.b64encode(chunk), "utf-8")
+
+                # Build IAT protocol payload
                 if self.is_first_frame:
-                    # First frame data, needs to include business parameters
+                    # First frame: includes parameter.iat configuration
                     d = {
-                        "common": self.common_args,
-                        "business": self.business_args,
-                        "data": {
+                        "header": {
+                            "app_id": self.app_id,
                             "status": STATUS_FIRST_FRAME,
-                            "format": f"audio/L16;rate={sample_rate}",
-                            "audio": str(base64.b64encode(chunk), "utf-8"),
-                            "encoding": "raw",
+                        },
+                        "parameter": {
+                            "iat": {
+                                "domain": self.config.get("domain", "slm"),
+                                "language": self.config.get("language", "zh_cn"),
+                                "accent": self.config.get("accent", "mandarin"),
+                                "eos": self.config.get("eos", 6000),
+                                "dwa": self.config.get("dwa", "wpgs"),
+                                "result": {
+                                    "encoding": "utf8",
+                                    "compress": "raw",
+                                    "format": "json",
+                                },
+                            }
+                        },
+                        "payload": {
+                            "audio": {
+                                "encoding": audio_encoding,
+                                "sample_rate": sample_rate,
+                                "channels": channels,
+                                "bit_depth": bit_depth,
+                                "seq": seq,
+                                "status": STATUS_FIRST_FRAME,
+                                "audio": audio_b64,
+                            }
                         },
                     }
                     self.is_first_frame = False
                 else:
-                    # Middle frame data
+                    # Subsequent frames: header + payload only
                     d = {
-                        "data": {
+                        "header": {
+                            "app_id": self.app_id,
                             "status": STATUS_CONTINUE_FRAME,
-                            "format": f"audio/L16;rate={sample_rate}",
-                            "audio": str(base64.b64encode(chunk), "utf-8"),
-                            "encoding": "raw",
-                        }
+                        },
+                        "payload": {
+                            "audio": {
+                                "encoding": audio_encoding,
+                                "sample_rate": sample_rate,
+                                "channels": channels,
+                                "bit_depth": bit_depth,
+                                "seq": seq,
+                                "status": STATUS_CONTINUE_FRAME,
+                                "audio": audio_b64,
+                            }
+                        },
                     }
 
                 # Update timeline based on actual sent bytes
@@ -381,14 +495,23 @@ class XfyunWSRecognition:
                 except asyncio.CancelledError:
                     pass
 
-            # Send end identifier
+            # Send end identifier (IAT protocol)
             d = {
-                "data": {
+                "header": {
+                    "app_id": self.app_id,
                     "status": STATUS_LAST_FRAME,
-                    "format": f"audio/L16;rate={self.config.get('samplerate', 16000)}",
-                    "audio": "",
-                    "encoding": "raw",
-                }
+                },
+                "payload": {
+                    "audio": {
+                        "encoding": self.config.get("audio_encoding", "raw"),
+                        "sample_rate": self.config.get("samplerate", 16000),
+                        "channels": self.config.get("channels", 1),
+                        "bit_depth": self.config.get("bit_depth", 16),
+                        "seq": 999999,
+                        "status": STATUS_LAST_FRAME,
+                        "audio": "",
+                    }
+                },
             }
             ws = self.websocket
             if ws is not None:

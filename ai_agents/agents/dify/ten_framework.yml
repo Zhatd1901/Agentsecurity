@@ -1,0 +1,866 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: advanced-chat
+  name: ten_framework
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.17@f7a5c1d222d17ee419b17a80d6e4923838fe93788dc724a3af73fbc6990b3a32
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 02e15948-a46d-47da-9718-4f3b16267aa1
+    name: missing_count
+    selector:
+    - conversation
+    - missing_count
+    value: 5
+    value_type: integer
+  - description: ''
+    id: e15bb0c5-0a57-4436-937e-fc3e7ed98682
+    name: empty
+    selector:
+    - conversation
+    - empty
+    value: '-1'
+    value_type: string
+  - description: 访客车牌号
+    id: 2837bb84-f71a-436c-ad83-cf59731b8633
+    name: license_plate
+    selector:
+    - conversation
+    - license_plate
+    value: '-1'
+    value_type: string
+  - description: 访客访问时间
+    id: 87de2bf4-c915-4589-b788-210ab453d6a8
+    name: entry_time
+    selector:
+    - conversation
+    - entry_time
+    value: ''
+    value_type: string
+  - description: 访问缘由
+    id: 95951305-b8c8-4e17-a43d-58b133fd8c9f
+    name: purpose
+    selector:
+    - conversation
+    - purpose
+    value: '-1'
+    value_type: string
+  - description: 访问公司
+    id: a0895b97-5cb0-4aef-bc0d-01de037db751
+    name: company
+    selector:
+    - conversation
+    - company
+    value: '-1'
+    value_type: string
+  - description: 访客手机号
+    id: 509b5d7b-91f3-4262-8208-04146f4a050d
+    name: phone_number
+    selector:
+    - conversation
+    - phone_number
+    value: '-1'
+    value_type: string
+  - description: 访客信息
+    id: c988ba28-d65b-4be4-b47f-f33383253cc8
+    name: name
+    selector:
+    - conversation
+    - name
+    value: '-1'
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: if-else
+      id: 1780163586501-source-17801602172402-target
+      selected: false
+      source: '1780163586501'
+      sourceHandle: source
+      target: '17801602172402'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: parameter-extractor
+        targetType: code
+      id: 17801602172401-source-1780165508231-target
+      selected: false
+      source: '17801602172401'
+      sourceHandle: source
+      target: '1780165508231'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1780165508231-source-1780163586501-target
+      selected: false
+      source: '1780165508231'
+      sourceHandle: source
+      target: '1780163586501'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 17801602172402-true-1780226133639-target
+      selected: false
+      source: '17801602172402'
+      sourceHandle: 'true'
+      target: '1780226133639'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 17801602172402-false-17801602172400-target
+      selected: false
+      source: '17801602172402'
+      sourceHandle: 'false'
+      target: '17801602172400'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: assigner
+      id: 1780226133639-source-17803145119980-target
+      selected: false
+      source: '1780226133639'
+      sourceHandle: source
+      target: '17803145119980'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 17801602172400-source-1780331095208-target
+      selected: false
+      source: '17801602172400'
+      sourceHandle: source
+      target: '1780331095208'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1780331095208-source-1780160876915-target
+      selected: false
+      source: '1780331095208'
+      sourceHandle: source
+      target: '1780160876915'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: answer
+      id: 1780226133639-source-1780331545277-target
+      selected: false
+      source: '1780226133639'
+      sourceHandle: source
+      target: '1780331545277'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: parameter-extractor
+      id: 1780160189374-source-17801602172401-target
+      source: '1780160189374'
+      sourceHandle: source
+      target: '17801602172401'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables: []
+      height: 72
+      id: '1780160189374'
+      position:
+        x: 0
+        y: 201.66666666666666
+      positionAbsolute:
+        x: 0
+        y: 201.66666666666666
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            temperature: 0.3
+            thinking: true
+            top_p: 0.81
+          mode: chat
+          name: deepseek-v4-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1780165508231'
+            - company
+            value_type: string
+            variable: company
+          - value_selector:
+            - '1780165508231'
+            - purpose
+            value_type: string
+            variable: purpose
+          - value_selector:
+            - '1780165508231'
+            - question_fields
+            variable: question_fields
+        prompt_template:
+        - edition_type: jinja2
+          id: 0697ed03-7129-4f5a-b0b0-719e16ed68ff
+          jinja2_text: "你是门岗保安，只输出一句追问。\r\n\r\n已知：\r\n公司={{company}}\r\n事由={{purpose}}\r\
+            \n待问={{question_fields}}\r\n\r\n规则：\r\n只问待问字段；多个合并问；-1或空视为未知；不解释不换行；不要复述已知信息；口语自然。\r\
+            \n\r\n参考：\r\nlicense_plate：车牌方便说下？\r\nphone_number：手机号方便留一下吗？\r\ncompany：请问去哪家公司？\r\
+            \npurpose：请问来办什么事？\r\nlicense_plate：请问您车牌多少？\r\ncompany+purpose：请问去哪家公司，办什么事？\r\
+            \n\r\n若公司已知且只问事由：去{{company}}办什么事？\r\n若事由已知且只问公司：请问{{purpose}}到哪个公司？\r\
+            \n\r\n只输出追问。"
+          role: system
+          text: "# Role: 快问门岗\n\n## Profile\n- language: 中文\n- description: 根据已知访客信息和待问字段快速生成一句自然追问的高效门岗\n\
+            - background: 公司大门保安，每天登记大量访客，需快速补齐缺失信息\n- personality: 简洁、高效、口语化\n- expertise:\
+            \ 灵活组合问询内容，自然衔接已知信息\n- target_audience: 来访客人\n\n## Skills\n- 信息组合问询：将多个待问字段合并为一句连贯追问，避免分句\n\
+            - 上下文衔接：已知信息自然嵌入问句，如\"张先生，车牌方便说下？\"\n- 优先句式应用：根据字段组合优先选用对应句式风格，但避免完全照搬，需灵活变通\n\
+            \n## Rules\n1. 输出限制：\n   - 只输出一句追问，无前缀无解释\n   - 不超过25字\n   - 不换行\n\n2.\
+            \ 问询规则：\n   - 只询问{{question_fields}}中的字段\n   - 多字段必须合并为一句，禁止分开问\n   -\
+            \ 已知字段不重复询问\n\n3. 已知字段默认值判定：\n   - 若{{company}}、{{purpose}}、{{name}}未获得或值为-1，视为未知，需作为待问字段处理\n\
+            \   - 仅当字段有实际值且不为-1时，视为已知信息\n\n4. 句式参考规则（仅作风格参考，不可完全照搬）：\n   - 单字段问询风格：\n\
+            \     - license_plate：\"请问车牌多少？\" / \"车牌方便说下？\"\n     - phone_number：\"\
+            手机号方便留一下吗？\"\n     - name：\"请问怎么称呼？\"\n     - company：\"请问去哪家公司？\"\n \
+            \    - purpose：\"请问来办什么事？\"\n   - 多字段组合问询风格：\n     - company+purpose：\"\
+            请问去哪家公司，什么事？\"\n     - license_plate+company：\"车牌多少，去哪家公司？\"\n     - license_plate+purpose：\"\
+            车牌多少，办什么事？\"\n   - 上下文嵌入风格：\n     - 若姓名已知，问车牌/手机号时需加称呼（如：\"张先生，车牌多少？\"\
+            ）\n     - 若公司已知，问{{purpose}}时适用句式：\"去{{company}}办什么事？\"\n     - 若{{purpose}}已知，问公司时适用句式：\"\
+            请问{{purpose}}到哪个公司？\"\n\n## Workflows\n- 目标: 生成一句自然口语追问补全访客信息\n- 步骤 1:\
+            \ 读取已知{{company}}、{{purpose}}、{{name}}，若未获得或值为-1则视为未知\n- 步骤 2: 只针对{{question_fields}}生成追问，如有已知信息则自然嵌入衔接，参考优先句式风格但需灵活变通，不可完全照搬\n\
+            - 步骤 3: 输出一句不超过25字的口语追问\n\n## Initialization\n作为快问门岗，遵守上述Rules，直接输出追问。"
+        reasoning_format: tagged
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              appointment_time:
+                description: 预约时间，请严格使用 YYYY-MM-DD HH:MM 格式，例如 2026-06-01 14:30
+                type: string
+              is_confirmed:
+                description: 用户是否确认信息
+                type: boolean
+              name:
+                description: 用户的姓名
+                type: string
+              phone:
+                description: 用户的手机号
+                type: string
+            required:
+            - name
+            - phone
+            - appointment_time
+            type: object
+        structured_output_enabled: false
+        title: 'LLM '
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '17801602172400'
+      position:
+        x: 1730
+        y: 510.50038358150834
+      positionAbsolute:
+        x: 1730
+        y: 510.50038358150834
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        instruction: '你是访客登记信息提取器。
+
+
+          请从用户本轮输入中提取访客登记信息。
+
+
+          需要提取的字段：
+
+          - license_plate：车牌号
+
+          - purpose：到访事由
+
+          - company：单位/公司
+
+          - phone_number：手机号
+
+
+          提取规则：
+
+          1. 只提取用户本轮明确提供的信息。
+
+          2. 用户没有提供的字段，返回空字符串。
+
+          3. 不要猜测，不要补全。
+
+          4. 不要把多个字段混在一起。
+
+          5. 手机号必须是用户明确提供的手机号。
+
+          6. 车牌号通常包含省份简称、字母和数字，例如浙C097DU、粤B12345。
+
+          7. 公司或单位通常包含公司名、组织名、商户名。
+
+          8. 到访事由通常是送水、维修、面试、拜访、送货等。'
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            temperature: 0
+            thinking: false
+            top_p: 0.1
+          mode: chat
+          name: deepseek-v4-flash
+          provider: langgenius/deepseek/deepseek
+        parameters:
+        - description: 访客手机号
+          name: phone_number
+          required: true
+          type: string
+        - description: 访客目的地的公司
+          name: company
+          required: true
+          type: string
+        - description: 来访事由,可以是简短的原因,不需要特别具体
+          name: purpose
+          required: true
+          type: string
+        - description: 车牌号
+          name: license_plate
+          required: true
+          type: string
+        query:
+        - sys
+        - query
+        reasoning_mode: prompt
+        selected: false
+        title: 提取对话信息
+        type: parameter-extractor
+        vision:
+          enabled: false
+      height: 87
+      id: '17801602172401'
+      position:
+        x: 342
+        y: 206.16666666666666
+      positionAbsolute:
+        x: 342
+        y: 206.16666666666666
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: 2dbb95e3-f901-4e6f-93c3-728a727b16aa
+            value: '0'
+            varType: number
+            variable_selector:
+            - conversation
+            - missing_count
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 123
+      id: '17801602172402'
+      position:
+        x: 1368
+        y: 251
+      positionAbsolute:
+        x: 1368
+        y: 251
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1780331095208.answer#}}'
+        selected: false
+        title: 回复TTS
+        type: answer
+        variables: []
+      height: 102
+      id: '1780160876915'
+      position:
+        x: 2414
+        y: 527.1999999999999
+      positionAbsolute:
+        x: 2414
+        y: 527.1999999999999
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1780165508231'
+          - license_plate
+          variable_selector:
+          - conversation
+          - license_plate
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1780165508231'
+          - entry_time
+          variable_selector:
+          - conversation
+          - entry_time
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1780165508231'
+          - purpose
+          variable_selector:
+          - conversation
+          - purpose
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1780165508231'
+          - company
+          variable_selector:
+          - conversation
+          - company
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1780165508231'
+          - phone_number
+          variable_selector:
+          - conversation
+          - phone_number
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1780165508231'
+          - missing_count
+          variable_selector:
+          - conversation
+          - missing_count
+        selected: false
+        title: 变量赋值
+        type: assigner
+        version: '2'
+      height: 213
+      id: '1780163586501'
+      position:
+        x: 1026
+        y: 153.16666666666666
+      positionAbsolute:
+        x: 1026
+        y: 153.16666666666666
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "from datetime import datetime, timezone, timedelta\n\ndef main(\n \
+          \   old_license_plate: str = \"-1\",\n    old_entry_time: str = \"-1\",\n\
+          \    old_purpose: str = \"-1\",\n    old_company: str = \"-1\",\n    old_phone_number:\
+          \ str = \"-1\",\n    new_license_plate: str = \"-1\",\n    new_purpose:\
+          \ str = \"-1\",\n    new_company: str = \"-1\",\n    new_phone_number: str\
+          \ = \"-1\",\n) -> dict:\n\n    def is_empty(value):\n        if value is\
+          \ None:\n            return True\n        text = str(value).strip()\n  \
+          \      return text == \"\" or text == \"-1\" or text.lower() in [\n    \
+          \        \"null\",\n            \"none\",\n            \"undefined\",\n\
+          \            \"未填写\",\n            \"无\",\n            \"空\",\n        ]\n\
+          \n    def merge(old, new):\n        return old if is_empty(new) else new\n\
+          \n    now_cn = datetime.now(timezone(timedelta(hours=8)))\n    current_time\
+          \ = now_cn.strftime(\"%Y%m%d%H%M%S\")\n\n    data = {\n        \"license_plate\"\
+          : merge(old_license_plate, new_license_plate),\n        \"entry_time\":\
+          \ old_entry_time if not is_empty(old_entry_time) else current_time,\n  \
+          \      \"purpose\": merge(old_purpose, new_purpose),\n        \"company\"\
+          : merge(old_company, new_company),\n        \"phone_number\": merge(old_phone_number,\
+          \ new_phone_number),\n    }\n\n    field_names = {\n        \"license_plate\"\
+          : \"车牌号\",\n        \"purpose\": \"到访事由\",\n        \"company\": \"单位/公司\"\
+          ,\n        \"phone_number\": \"手机号\",\n    }\n\n    missing = []\n    for\
+          \ key, label in field_names.items():\n        if is_empty(data.get(key)):\n\
+          \            missing.append(label)\n\n    question_priority = [\n      \
+          \  (\"license_plate\", \"车牌号\"),\n        (\"company\", \"单位/公司\"),\n  \
+          \      (\"purpose\", \"到访事由\"),\n        (\"phone_number\", \"手机号\"),\n\
+          \    ]\n\n    question_fields = []\n    for key, label in question_priority:\n\
+          \        if is_empty(data.get(key)):\n            question_fields.append(label)\n\
+          \n    question_fields = question_fields[:2]\n\n    return {\n        **data,\n\
+          \        \"missing_fields\": \"、\".join(missing),\n        \"missing_count\"\
+          : len(missing),\n        \"question_fields\": \"、\".join(question_fields),\n\
+          \    }"
+        code_language: python3
+        outputs:
+          company:
+            children: null
+            type: string
+          entry_time:
+            children: null
+            type: string
+          license_plate:
+            children: null
+            type: string
+          missing_count:
+            children: null
+            type: number
+          missing_fields:
+            children: null
+            type: string
+          phone_number:
+            children: null
+            type: string
+          purpose:
+            children: null
+            type: string
+          question_fields:
+            children: null
+            type: string
+        selected: false
+        title: 填充信息,计算缺失值
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - license_plate
+          value_type: string
+          variable: old_license_plate
+        - value_selector:
+          - conversation
+          - purpose
+          value_type: string
+          variable: old_purpose
+        - value_selector:
+          - conversation
+          - company
+          value_type: string
+          variable: old_company
+        - value_selector:
+          - conversation
+          - phone_number
+          value_type: number
+          variable: old_phone_number
+        - value_selector:
+          - '17801602172401'
+          - license_plate
+          value_type: string
+          variable: new_license_plate
+        - value_selector:
+          - '17801602172401'
+          - purpose
+          value_type: string
+          variable: new_purpose
+        - value_selector:
+          - '17801602172401'
+          - company
+          value_type: string
+          variable: new_company
+        - value_selector:
+          - '17801602172401'
+          - phone_number
+          value_type: number
+          variable: new_phone_number
+      height: 51
+      id: '1780165508231'
+      position:
+        x: 682.8003835815084
+        y: 232.66858457420855
+      positionAbsolute:
+        x: 682.8003835815084
+        y: 232.66858457420855
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-503
+            key: ''
+            type: text
+            value: "{\n  \"license_plate\": \"{{#conversation.license_plate#}}\",\n\
+              \  \"entry_time\": \"{{#conversation.entry_time#}}\",\n  \"purpose\"\
+              : \"{{#conversation.purpose#}}\",\n  \"company\": \"{{#conversation.company#}}\"\
+              ,\n  \"phone\": \"{{#conversation.phone_number#}}\",\n  \"name\": \"\
+              {{#conversation.name#}}\"\n}"
+          type: json
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 更新数据库
+        type: http-request
+        url: http://host.docker.internal:8000/api/visitors/create
+        variables: []
+      height: 137
+      id: '1780226133639'
+      position:
+        x: 1730
+        y: 172.59999999999997
+      positionAbsolute:
+        x: 1730
+        y: 172.59999999999997
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - conversation
+          - empty
+          variable_selector:
+          - conversation
+          - license_plate
+        - input_type: variable
+          operation: over-write
+          value:
+          - conversation
+          - empty
+          variable_selector:
+          - conversation
+          - entry_time
+        - input_type: variable
+          operation: over-write
+          value:
+          - conversation
+          - empty
+          variable_selector:
+          - conversation
+          - purpose
+        - input_type: variable
+          operation: over-write
+          value:
+          - conversation
+          - empty
+          variable_selector:
+          - conversation
+          - company
+        - input_type: variable
+          operation: over-write
+          value:
+          - conversation
+          - empty
+          variable_selector:
+          - conversation
+          - phone_number
+        - input_type: variable
+          operation: over-write
+          value:
+          - conversation
+          - empty
+          variable_selector:
+          - conversation
+          - name
+        selected: false
+        title: 重置信息
+        type: assigner
+        version: '2'
+      height: 213
+      id: '17803145119980'
+      position:
+        x: 2092
+        y: 0
+      positionAbsolute:
+        x: 2092
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import re\n\ndef main(llm_text: str = \"\") -> dict:\n    text = llm_text\
+          \ or \"\"\n\n    # 删除完整 <think>...</think> 内容\n    text = re.sub(r\"<think>.*?</think>\"\
+          , \"\", text, flags=re.S | re.I).strip()\n\n    # 如果还有残留的 think 标签，继续清理\n\
+          \    text = re.sub(r\"</?think>\", \"\", text, flags=re.I).strip()\n\n \
+          \   # 如果模型输出多行，只取最后一行非空内容\n    lines = [line.strip() for line in text.splitlines()\
+          \ if line.strip()]\n    if lines:\n        text = lines[-1]\n\n    # 防止仍然太长，简单截断\n\
+          \    if len(text) > 30:\n        text = text[:30]\n\n    return {\n    \
+          \    \"answer\": text\n    }"
+        code_language: python3
+        outputs:
+          answer:
+            children: null
+            type: string
+        selected: false
+        title: 格式清洗
+        type: code
+        variables:
+        - value_selector:
+          - '17801602172400'
+          - text
+          value_type: string
+          variable: llm_text
+      height: 51
+      id: '1780331095208'
+      position:
+        x: 2072
+        y: 544.1999999999999
+      positionAbsolute:
+        x: 2072
+        y: 544.1999999999999
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: 好的！{{#conversation.license_plate#}}，已通知门卫，请稍等放行。
+        selected: false
+        title: 收集完成
+        type: answer
+        variables: []
+      height: 119
+      id: '1780331545277'
+      position:
+        x: 2092
+        y: 345
+      positionAbsolute:
+        x: 2092
+        y: 345
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -335.2563453512721
+      y: 135.80888310230927
+      zoom: 0.8335997945554777
+  rag_pipeline_variables: []

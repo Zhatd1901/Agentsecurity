@@ -9,7 +9,8 @@ services:
     ports:
       - "${GRAPH_DESIGNER_SERVER_PORT}:${GRAPH_DESIGNER_SERVER_PORT}"
       - "3000:3000"
-      - 8000-9001:8000-9001
+      - "8080:8080"
+      - "9000:9000"
     volumes:
       - ./:/app
       - ${LOG_PATH}:${LOG_PATH}
@@ -19,8 +20,43 @@ services:
     working_dir: /app
     env_file:
       - .env
+    # Auto-install all deps + ngrok (services started manually)
+    command: >
+      bash -c "
+      echo '=== Installing Python deps ===' &&
+      uv pip install --system aiohttp aiofiles pydantic websockets httpx openai fastapi uvicorn twilio &&
+      echo '=== Installing ngrok ===' &&
+      curl -sSL https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz | tar xz -C /usr/local/bin &&
+      ngrok config add-authtoken $${NGROK_AUTHTOKEN} 2>/dev/null || true &&
+      echo '=== Ready. Run your agent manually: ===' &&
+      echo '  voice-assistant:      cd /app/agents/examples/voice-assistant && task run' &&
+      echo '  voice-assistant-sip:  cd /app/agents/examples/voice-assistant-sip-twilio && task run' &&
+      tail -f /dev/null
+      "
     networks:
       - ten_agent_network
+      - docker_default
+
+  # FastAPI 中间件 —— Dify ↔ 数据库
+  fastapi:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: agentsecurity_fastapi
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./fastapi:/app
+      - ./data:/app/data
+    working_dir: /app
+    env_file:
+      - .env
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - ten_agent_network
+      - docker_default
+
   # ten_graph_designer:
   #   image: ghcr.io/ten-framework/ten_graph_designer:4cc33b8
   #   container_name: ten_graph_designer
@@ -34,3 +70,5 @@ services:
 networks:
   ten_agent_network:
     driver: bridge
+  docker_default:
+    external: true

@@ -4,27 +4,58 @@ from ten_ai_base.utils import encrypt
 
 
 class XfyunASRConfig(BaseModel):
-    """Xfyun ASR Bigmodel Configuration"""
+    """Xfyun ASR Bigmodel Configuration (IAT 中英识别大模型)
 
+    Official API: wss://iat.xf-yun.com/v1
+    Documentation: https://www.xfyun.cn/doc/spark/spark_zh_iat.html
+    """
+
+    # Provider identification
+    provider: str = "xfyun_iat_bigmodel"
+
+    # Credentials (from env vars)
     app_id: str = ""
     api_key: str = ""
     api_secret: str = ""
-    language_name: str = "zh"  # ten use language, zh_cn, en_us
-    language: str = "mix"  # api use language zh_cn support zh, en,
-    aue: str = "raw"
+
+    # IAT API: host / path / url
+    host: str = "iat.xf-yun.com"
+    path: str = "/v1"
+    url: str = "wss://iat.xf-yun.com/v1"
+
+    # IAT API: domain / language / accent
+    domain: str = "slm"
+    language: str = "zh_cn"
     accent: str = "mandarin"
-    domain: str = "ist_cbm_mix"
-    host: str = "ist-api.xfyun.cn"
+
+    # Audio parameters
     sample_rate: int = 16000
-    finalize_mode: str = "disconnect"  # "disconnect" or "mute_pkg"
-    mute_pkg_duration_ms: int = 1000
+    channels: int = 1
+    bit_depth: int = 16
+    audio_encoding: str = "raw"  # "raw" for PCM, "lame" for MP3
+
+    # IAT control parameters
+    dwa: str = "wpgs"
+    eos: int = 800  # 静音多少 ms 后服务端自动断句（官方示例 6000，对话建议 800-1500）
+
+    # Result parameters
+    result_encoding: str = "utf8"
+    result_compress: str = "raw"
+    result_format: str = "json"
+
+    # Limits
+    max_audio_seconds: int = 60
+
+    # Dump / debug
     dump: bool = False
     dump_path: str = "/tmp"
 
-    # Xfyun specific parameters
-    dwa: str = "wpgs"
+    # Legacy fields (kept for backward compatibility, NOT used by IAT)
+    language_name: str = "zh"
+    aue: str = "raw"
+    finalize_mode: str = "disconnect"
+    mute_pkg_duration_ms: int = 1000
     dhw: str = ""
-    eos: int = 99999999
     punc: int = 1
     nunum: int = 1
     vto: int = 3000
@@ -36,6 +67,21 @@ class XfyunASRConfig(BaseModel):
         for key, value in params.items():
             if hasattr(self, key):
                 setattr(self, key, value)
+
+    def enforce_iat_bigmodel(self) -> None:
+        """强制覆盖 IAT 中英识别大模型的关键字段，防止 params 中残留的 IST
+        配置（如 language=mix, domain=ist_cbm_mix）反向污染正确配置。
+        """
+        if self.provider != "xfyun_iat_bigmodel":
+            return
+
+        # 硬锁定 IAT API 核心参数，不允许任何来源覆盖
+        self.host = "iat.xf-yun.com"
+        self.path = "/v1"
+        self.url = "wss://iat.xf-yun.com/v1"
+        self.domain = "slm"
+        self.language = "zh_cn"
+        self.accent = "mandarin"
 
     def to_json(self, sensitive_handling: bool = False) -> str:
         """Convert config to JSON string with optional sensitive data handling."""

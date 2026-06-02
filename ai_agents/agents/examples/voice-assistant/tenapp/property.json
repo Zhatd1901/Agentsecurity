@@ -26,46 +26,60 @@
             {
               "type": "extension",
               "name": "stt",
-              "addon": "deepgram_asr_python",
+              "addon": "xfyun_asr_bigmodel_python",
               "extension_group": "stt",
               "property": {
-                "params": {
-                  "api_key": "${env:DEEPGRAM_API_KEY}",
-                  "language": "en-US",
-                  "model": "nova-3"
-                }
+                "provider": "xfyun_iat_bigmodel",
+                "host": "iat.xf-yun.com",
+                "path": "/v1",
+                "url": "wss://iat.xf-yun.com/v1",
+                "app_id": "${env:XFYUN_ASR_BIGMODEL_APP_ID}",
+                "api_key": "${env:XFYUN_ASR_BIGMODEL_API_KEY}",
+                "api_secret": "${env:XFYUN_ASR_BIGMODEL_API_SECRET}",
+                "domain": "slm",
+                "language": "zh_cn",
+                "accent": "mandarin",
+                "sample_rate": 16000,
+                "channels": 1,
+                "bit_depth": 16,
+                "audio_encoding": "raw",
+                "eos": 800,
+                "dwa": "wpgs",
+                "result_encoding": "utf8",
+                "result_compress": "raw",
+                "result_format": "json",
+                "max_audio_seconds": 60,
+                "finalize_mode": "mute_pkg",
+                "mute_pkg_duration_ms": 1000,
+                "dump": false,
+                "dump_path": "/tmp"
               }
             },
             {
               "type": "extension",
               "name": "llm",
-              "addon": "openai_llm2_python",
-              "extension_group": "chatgpt",
+              "addon": "dify_llm2_python",
+              "extension_group": "dify",
               "property": {
-                "base_url": "https://api.openai.com/v1",
-                "api_key": "${env:OPENAI_API_KEY}",
-                "frequency_penalty": 0.9,
-                "model": "${env:OPENAI_MODEL}",
-                "max_tokens": 512,
-                "prompt": "",
-                "proxy_url": "${env:OPENAI_PROXY_URL|}",
-                "greeting": "TEN Agent connected. How can I help you today?",
-                "max_memory_length": 10
+                "base_url": "http://docker-api-1:5001/v1",
+                "api_key": "app-11lwuQF9MLYbNxHem0CJcxrL",
+                "user_id": "TenAgent"
               }
             },
             {
               "type": "extension",
               "name": "tts",
-              "addon": "elevenlabs_tts2_python",
+              "addon": "xfyun_tts_python",
               "extension_group": "tts",
               "property": {
-                "dump": false,
-                "dump_path": "./",
                 "params": {
-                  "key": "${env:ELEVENLABS_TTS_KEY}",
-                  "model_id": "eleven_multilingual_v2",
-                  "voice_id": "pNInz6obpgDQGcFmaJgB",
-                  "output_format": "pcm_16000"
+                  "app_id": "${env:XF_XFYUN_TTS_APP_ID}",
+                  "api_key": "${env:XF_XFYUN_TTS_API_KEY}",
+                  "api_secret": "${env:XF_XFYUN_TTS_API_SECRET}",
+                  "voice_name": "aisbabyxu",
+                  "sample_rate": 16000,
+                  "speed": 100,
+                  "volume": 50
                 }
               }
             },
@@ -75,7 +89,7 @@
               "addon": "main_python",
               "extension_group": "control",
               "property": {
-                "greeting": "TEN Agent connected. How can I help you today?"
+                "greeting": "您好，请问车牌号多少，今天找哪家公司，有什么事情吗？"
               }
             },
             {
@@ -883,7 +897,7 @@
               "addon": "main_python",
               "extension_group": "control",
               "property": {
-                "greeting": "TEN Agent connected. How can I help you today?"
+                "greeting": "你好,我可以帮你什么?"
               }
             },
             {

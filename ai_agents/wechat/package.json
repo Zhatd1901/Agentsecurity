@@ -1,0 +1,24 @@
+{
+  "name": "wechat-dify-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "微信 → Dify AI 桥接服务 — 在微信中与 Dify 对话",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "npm run build",
+    "start": "node dist/main.js",
+    "setup": "node dist/main.js setup",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/qrcode-terminal": "^0.12.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -31,6 +31,20 @@ from .agent.events import (
 from .helper import _send_cmd, _send_data, parse_sentences
 from .config import MainControlConfig
 
+# TTS pre-generation — optional, gracefully degrades if module not available
+_tts_pregen_available = False
+try:
+    import sys as _sys
+    _current_dir = os.path.dirname(os.path.abspath(__file__))
+    _extension_parent = os.path.dirname(_current_dir)
+    if _extension_parent not in _sys.path:
+        _sys.path.insert(0, _extension_parent)
+    from xfyun_tts_python.xfyun_tts import XfYunTTSClient  # noqa: E402
+    from xfyun_tts_python.config import XfYunTTSConfig  # noqa: E402
+    _tts_pregen_available = True
+except ImportError:
+    pass
+
 import uuid
 
 
@@ -237,6 +251,83 @@ class MainControlExtension(AsyncExtension):
             # WebSocket server is now handled by the main server in server.py
             ten_env.log_info(
                 "WebSocket server is integrated with the main HTTP server"
+            )
+
+        # Pre-generate greeting audio via TTS (runs in background, gracefully degrades)
+        if _tts_pregen_available:
+            asyncio.create_task(self._pre_generate_greeting())
+        else:
+            ten_env.log_info(
+                "[MainControlExtension] TTS pre-generation skipped "
+                "(xfyun_tts_python module not importable in this environment)"
+            )
+
+    async def _pre_generate_greeting(self):
+        """Pre-generate greeting TTS audio and save as local PCM file.
+
+        Called during on_start so the audio file is ready before the first call connects.
+        Saves to /tmp/greeting_audio.pcm (16000Hz, 16bit, mono PCM).
+        Gracefully degrades if TTS client is unavailable.
+        """
+        if not _tts_pregen_available:
+            return
+        try:
+            greeting_text = self.config.greeting
+            if not greeting_text:
+                self.ten_env.log_warn("No greeting text configured, skipping pre-generation")
+                return
+
+            self.ten_env.log_info(
+                f"[MainControlExtension] Pre-generating greeting TTS to file: \"{greeting_text}\""
+            )
+
+            # Build TTS config from env vars — speed=100 (2x, max supported)
+            tts_config = XfYunTTSConfig(
+                app_id=os.getenv("XF_XFYUN_TTS_APP_ID", ""),
+                api_key=os.getenv("XF_XFYUN_TTS_API_KEY", ""),
+                api_secret=os.getenv("XF_XFYUN_TTS_API_SECRET", ""),
+                voice_name="aisbabyxu",
+                sample_rate=16000,
+                speed=100,
+                volume=50,
+            )
+
+            # Call TTS directly and collect all PCM chunks
+            client = XfYunTTSClient(tts_config, self.ten_env)
+            pcm_chunks: list[bytes] = []
+            async for chunk, event_type in client.get(greeting_text):
+                if event_type == 1 and chunk:  # EVENT_TTS_RESPONSE
+                    pcm_chunks.append(chunk)
+                elif event_type == 2:  # EVENT_TTS_END
+                    break
+                elif event_type in (3, 4):  # EVENT_TTS_ERROR
+                    self.ten_env.log_error(
+                        f"[MainControlExtension] Greeting TTS pre-generation failed: {chunk}"
+                    )
+                    return
+
+            if pcm_chunks:
+                pcm_data = b"".join(pcm_chunks)
+                duration_s = len(pcm_data) / (tts_config.sample_rate * 2)
+
+                # Save to local file
+                greeting_file = "/tmp/greeting_audio.pcm"
+                with open(greeting_file, "wb") as f:
+                    f.write(pcm_data)
+
+                self.ten_env.log_info(
+                    f"[MainControlExtension] Greeting TTS saved to file: "
+                    f"{greeting_file} ({len(pcm_data)} bytes, {duration_s:.1f}s, "
+                    f"speed={tts_config.speed})"
+                )
+            else:
+                self.ten_env.log_warn(
+                    "[MainControlExtension] Greeting TTS returned no audio"
+                )
+
+        except Exception as e:
+            self.ten_env.log_error(
+                f"[MainControlExtension] Failed to pre-generate greeting: {e}"
             )
 
     async def on_stop(self, ten_env: AsyncTenEnv):
@@ -567,19 +658,117 @@ class MainControlExtension(AsyncExtension):
         # Use the new cleanup method
         await self._end_call_and_cleanup(call_sid)
 
+    async def on_media_stream_stopped(self, call_sid: str):
+        """Called by server.py when Twilio sends 'stop' event.
+
+        Performs a FULL reset of all subsystems (ASR, TTS, LLM, counters)
+        so the next call starts from a completely clean state.
+        """
+        self.ten_env.log_info(
+            f"[MainControlExtension] Media stream stopped for {call_sid} — "
+            f"performing full subsystem reset"
+        )
+        await self._reset_all_subsystems(call_sid)
+        # Also clean up the call session
+        await self._end_call_and_cleanup(call_sid)
+
+    async def _reset_all_subsystems(self, call_sid: str = "reset"):
+        """Reset ALL subsystems to clean state for next call.
+
+        This prevents stale ASR connections, TTS state machine errors,
+        and turn_id conflicts between calls.
+        """
+        self.ten_env.log_info(
+            f"[MainControlExtension] === FULL RESET for next call (trigger: {call_sid}) ==="
+        )
+
+        # 1. Stop ASR — close current recognition connection, cancel internal tasks
+        try:
+            await _send_cmd(self.ten_env, "stop_connection", "stt")
+            self.ten_env.log_info("[MainControlExtension] ASR stop_connection sent")
+        except Exception as e:
+            self.ten_env.log_warn(f"[MainControlExtension] ASR stop failed: {e}")
+
+        # 2. Flush TTS — clear any in-progress TTS generation
+        try:
+            await _send_data(
+                self.ten_env,
+                "tts_flush",
+                "tts",
+                {"flush_id": f"reset-{call_sid}-{uuid.uuid4()}"},
+            )
+            self.ten_env.log_info("[MainControlExtension] TTS flush sent")
+        except Exception as e:
+            self.ten_env.log_warn(f"[MainControlExtension] TTS flush failed: {e}")
+
+        # 3. Interrupt LLM — stop any ongoing generation
+        try:
+            await self.agent.flush_llm()
+            self.ten_env.log_info("[MainControlExtension] LLM flush sent")
+        except Exception as e:
+            self.ten_env.log_warn(f"[MainControlExtension] LLM flush failed: {e}")
+
+        # 4. Reset internal state counters
+        self.turn_id = 0
+        self.session_id = str(uuid.uuid4())[:8]
+        self.sentence_fragment = ""
+        self.audio_frame_received = 0
+        self.audio_frame_sent_to_asr = 0
+
+        self.ten_env.log_info(
+            f"[MainControlExtension] State reset complete: "
+            f"turn_id={self.turn_id}, session_id={self.session_id}"
+        )
+
     async def on_websocket_connected(self, call_sid: str):
         """Called when websocket connection is established for a call"""
         try:
+            # ---- Full reset for new call ----
+            await self._reset_all_subsystems(call_sid)
+
             self.ten_env.log_info(
-                f"WebSocket connected for call {call_sid}, sending greeting TTS"
+                f"WebSocket connected for call {call_sid}, sending greeting"
             )
 
-            # Send greeting TTS using the configured greeting message
             greeting_text = self.config.greeting
-            await self._send_to_tts(greeting_text, True)
+            greeting_file = "/tmp/greeting_audio.pcm"
+
+            # Try to play pre-generated audio file directly (zero-latency)
+            if os.path.exists(greeting_file) and os.path.getsize(greeting_file) > 0:
+                self.ten_env.log_info(
+                    f"[MainControlExtension] Playing greeting from file: {greeting_file}"
+                )
+                with open(greeting_file, "rb") as f:
+                    pcm_data = f.read()
+                # Send directly to Twilio (bypasses TTS extension entirely)
+                await self.send_audio_to_twilio(pcm_data, call_sid)
+                self.ten_env.log_info(
+                    f"[MainControlExtension] Greeting played from file: "
+                    f"{len(pcm_data)} bytes"
+                )
+            else:
+                # Fallback: send text to TTS extension for on-the-fly generation
+                self.ten_env.log_info(
+                    f"[MainControlExtension] No greeting file, generating via TTS: \"{greeting_text}\""
+                )
+                await self._send_to_tts(greeting_text, True)
 
             self.ten_env.log_info(
-                f"Greeting TTS sent for call {call_sid}: {greeting_text}"
+                f"Greeting sent for call {call_sid}: \"{greeting_text}\""
             )
+
+            # Check if this is an incoming call with a captured caller number
+            session = self.server_instance.active_call_sessions.get(call_sid, {})
+            caller_number = session.get("caller_number", "")
+            if caller_number:
+                self.ten_env.log_info(
+                    f"Incoming call from {caller_number} — queueing to LLM directly (bypass STT)"
+                )
+                llm_input_text = (
+                    f"[系统通知] 用户通过电话呼入，来电号码: {caller_number}。请根据号码信息为用户提供服务。"
+                )
+                self.turn_id += 1
+                await self.agent.queue_llm_input(llm_input_text)
+
         except Exception as e:
-            self.ten_env.log_error(f"Failed to send greeting TTS: {str(e)}")
+            self.ten_env.log_error(f"Failed to send greeting: {str(e)}")

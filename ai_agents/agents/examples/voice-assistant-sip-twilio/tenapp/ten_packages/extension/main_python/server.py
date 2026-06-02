@@ -13,7 +13,7 @@ from datetime import datetime
 
 import uvicorn
 from fastapi import FastAPI, Request, HTTPException, WebSocket
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse
@@ -45,6 +45,9 @@ class TwilioCallServer:
 
         # Active call sessions
         self.active_call_sessions: Dict[str, Dict[str, Any]] = {}
+
+        # Pending caller numbers: CallSid → From number (bridged from /voice webhook to WebSocket start)
+        self.pending_callers: Dict[str, str] = {}
 
         # Setup routes
         self._setup_routes()
@@ -103,8 +106,7 @@ class TwilioCallServer:
                     )
                     connect = twiml_response.connect()
                     connect.stream(url=media_ws_url)
-                    twiml_response.append(connect)
-                    twiml_response.say("Stream Started")
+                    # Note: do NOT twiml_response.append(connect) — .connect() auto-appends
 
                 # twiml_response.say(message, voice="alice")
 
@@ -222,8 +224,10 @@ class TwilioCallServer:
                         "success": True,
                         "call_sid": call_sid,
                         "status": session["status"],
-                        "phone_number": session["phone_number"],
-                        "message": session["message"],
+                        "phone_number": session.get("phone_number"),
+                        "caller_number": session.get("caller_number"),
+                        "direction": session.get("direction", "outbound"),
+                        "message": session.get("message"),
                         "created_at": session["created_at"],
                         "ended_at": session.get("ended_at"),
                     }
@@ -245,6 +249,56 @@ class TwilioCallServer:
                     "calls": list(self.active_call_sessions.keys()),
                 }
             )
+
+        @self.app.post("/voice")
+        @self.app.get("/voice")
+        async def handle_incoming_call(request: Request):
+            """Handle incoming Twilio call webhook — extract caller number and return TwiML with media stream"""
+            try:
+                # Twilio sends form-encoded POST with From, To, CallSid, etc.
+                if request.method == "GET":
+                    from_number = request.query_params.get("From")
+                    call_sid = request.query_params.get("CallSid")
+                else:
+                    form_data = await request.form()
+                    from_number = str(form_data.get("From", ""))
+                    call_sid = str(form_data.get("CallSid", ""))
+
+                self._log_info(
+                    f"Incoming call from {from_number} (CallSid: {call_sid})"
+                )
+
+                # Store caller number for later use when WebSocket connects
+                if call_sid and from_number:
+                    self.pending_callers[call_sid] = from_number
+
+                # Build TwiML response with media stream
+                twiml_response = VoiceResponse()
+
+                if self.config.twilio_public_server_url:
+                    ws_protocol = "wss" if self.config.twilio_use_wss else "ws"
+                    media_ws_url = f"{ws_protocol}://{self.config.twilio_public_server_url}/media"
+                    self._log_info(
+                        f"Incoming call: connecting media stream to {media_ws_url}"
+                    )
+                    connect = twiml_response.connect()
+                    connect.stream(url=media_ws_url)
+                    # Note: do NOT twiml_response.append(connect) — .connect() auto-appends
+                else:
+                    # Fallback: just say something
+                    twiml_response.say(
+                        "Hello, your call is being connected. Please wait.",
+                        voice="alice",
+                    )
+
+                return PlainTextResponse(
+                    content=str(twiml_response),
+                    media_type="application/xml",
+                )
+
+            except Exception as e:
+                self._log_error(f"Failed to handle incoming call: {str(e)}")
+                raise HTTPException(status_code=500, detail=str(e))
 
         @self.app.post("/webhook/status")
         @self.app.get("/webhook/status")
@@ -278,6 +332,10 @@ class TwilioCallServer:
                         self.active_call_sessions[call_sid][
                             "ended_at"
                         ] = datetime.now().isoformat()
+
+                # Cleanup pending caller entry if call completed/abandoned
+                if call_sid in self.pending_callers:
+                    self.pending_callers.pop(call_sid, None)
 
                 return JSONResponse(content={"success": True})
 
@@ -406,6 +464,25 @@ class TwilioCallServer:
                             stream_sid = message.get("streamSid", "")
                             start = message.get("start", {})
                             call_sid = start.get("callSid", "")
+                            
+                            # Create session for incoming calls (not just outbound)
+                            if call_sid not in self.active_call_sessions:
+                                self.active_call_sessions[call_sid] = {
+                                    "call_sid": call_sid,
+                                    "status": "in-progress",
+                                    "direction": "inbound",
+                                    "created_at": datetime.now().isoformat(),
+                                }
+                                self._log_info(f"Created session for incoming call: {call_sid}")
+                            
+                            # Bridge caller number from /voice webhook into session
+                            if call_sid in self.pending_callers:
+                                caller_number = self.pending_callers.pop(call_sid)
+                                self.active_call_sessions[call_sid]["caller_number"] = caller_number
+                                self._log_info(
+                                    f"Bridged caller number {caller_number} into session {call_sid}"
+                                )
+                            
                             self.active_call_sessions[call_sid][
                                 "stream_sid"
                             ] = stream_sid
@@ -423,6 +500,14 @@ class TwilioCallServer:
                                 )
                         elif message.get("event") == "stop":
                             self._log_info(f"Media stream stopped: {message}")
+                            # Notify extension to fully reset all subsystems
+                            if (
+                                hasattr(self, "extension_instance")
+                                and self.extension_instance
+                            ):
+                                await self.extension_instance.on_media_stream_stopped(
+                                    call_sid
+                                )
 
                     except json.JSONDecodeError:
                         self._log_debug(

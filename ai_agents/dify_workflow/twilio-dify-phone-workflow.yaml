@@ -1,0 +1,96 @@
+version: "1.0"
+kind: Workflow
+name: 电话客服数据收集系统
+description: Twilio来电 → 查询老用户 → 收集信息 → 保存SQLite → 微信推送 → 支持管理员查询
+features:
+  - conversation
+
+nodes:
+  - id: start
+    type: start
+    name: "开始接收来电"
+    inputs:
+      caller_id: "{{caller_id}}"
+      call_time: "{{call_time}}"
+      initial_text: "{{initial_text}}"
+
+  - id: query_user
+    type: code
+    name: "查询SQLite - 是否为老用户"
+    language: python
+    code: |
+      import sqlite3
+      conn = sqlite3.connect('users.db')
+      cursor = conn.cursor()
+      cursor.execute("SELECT name, appointment_time FROM users WHERE phone = ?", (inputs['caller_id'],))
+      result = cursor.fetchone()
+      conn.close()
+      return {"is_old_user": result is not None, "user_name": result[0] if result else None}
+
+  - id: decide_branch
+    type: if-else
+    name: "判断新老用户"
+    condition: "{{query_user.is_old_user}} == true"
+
+  - id: old_user_greeting
+    type: llm
+    name: "老用户个性化问候"
+    model: "gpt-4o-mini"
+    prompt: "用户{{query_user.user_name}}您好，很高兴您又来了！请问这次有什么可以帮您的？"
+
+  - id: collect_info
+    type: question-answering
+    name: "收集用户信息"
+    questions:
+      - "请问您贵姓？"
+      - "请确认您的手机号"
+      - "您希望预约什么时间？（格式：2026-06-01 14:30）"
+
+  - id: save_sqlite
+    type: code
+    name: "保存到SQLite"
+    language: python
+    code: |
+      import sqlite3, datetime
+      conn = sqlite3.connect('users.db')
+      cursor = conn.cursor()
+      cursor.execute('''CREATE TABLE IF NOT EXISTS users 
+                        (phone TEXT PRIMARY KEY, name TEXT, appointment_time TEXT, last_call TEXT)''')
+      cursor.execute("INSERT OR REPLACE INTO users VALUES (?, ?, ?, ?)",
+                     (inputs['caller_id'], inputs['name'], inputs['appointment_time'], datetime.datetime.now()))
+      conn.commit()
+      conn.close()
+      return {"status": "saved", "message": "信息已保存"}
+
+  - id: wechat_push
+    type: http
+    name: "推送微信给管理员"
+    method: POST
+    url: "https://您的推送接口地址"   # ← 请替换为Server酱/PushPlus/企业微信Webhook
+    body: "【新预约通知】\n姓名：{{name}}\n电话：{{caller_id}}\n预约时间：{{appointment_time}}\n来电时间：{{call_time}}"
+
+  - id: end
+    type: end
+    name: "结束并回复用户"
+    outputs:
+      answer: "感谢您的来电，信息已记录，我们会尽快处理。"
+
+edges:
+  - source: start
+    target: query_user
+  - source: query_user
+    target: decide_branch
+  - source: decide_branch
+    target: old_user_greeting
+    condition: true
+  - source: decide_branch
+    target: collect_info
+    condition: false
+  - source: old_user_greeting
+    target: collect_info
+  - source: collect_info
+    target: save_sqlite
+  - source: save_sqlite
+    target: wechat_push
+  - source: wechat_push
+    target: end

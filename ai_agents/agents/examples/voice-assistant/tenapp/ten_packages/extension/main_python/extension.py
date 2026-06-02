@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import time
 from typing import Literal
 
@@ -21,6 +22,20 @@ from .agent.events import (
 )
 from .helper import _send_cmd, _send_data, parse_sentences
 from .config import MainControlConfig  # assume extracted from your base model
+
+# TTS pre-generation — optional, gracefully degrades if module not available
+_tts_pregen_available = False
+try:
+    import sys as _sys
+    _current_dir = os.path.dirname(os.path.abspath(__file__))
+    _extension_dir = os.path.dirname(_current_dir)
+    if _extension_dir not in _sys.path:
+        _sys.path.insert(0, _extension_dir)
+    from xfyun_tts_python.xfyun_tts import XfYunTTSClient  # noqa: E402
+    from xfyun_tts_python.config import XfYunTTSConfig  # noqa: E402
+    _tts_pregen_available = True
+except ImportError:
+    pass
 
 import uuid
 
@@ -117,6 +132,66 @@ class MainControlExtension(AsyncExtension):
 
     async def on_start(self, ten_env: AsyncTenEnv):
         ten_env.log_info("[MainControlExtension] on_start")
+        # Pre-generate greeting audio in background (gracefully degrades)
+        if _tts_pregen_available:
+            asyncio.create_task(self._pre_generate_greeting())
+        else:
+            ten_env.log_info(
+                "[MainControlExtension] TTS pre-generation skipped "
+                "(xfyun_tts_python module not importable)"
+            )
+
+    async def _pre_generate_greeting(self):
+        """Pre-generate greeting TTS audio and save as local PCM file."""
+        if not _tts_pregen_available:
+            return
+        try:
+            greeting_text = self.config.greeting if self.config else ""
+            if not greeting_text:
+                self.ten_env.log_warn("No greeting text, skipping pre-generation")
+                return
+
+            self.ten_env.log_info(
+                f"[MainControlExtension] Pre-generating greeting TTS to file: \"{greeting_text}\""
+            )
+
+            tts_config = XfYunTTSConfig(
+                app_id=os.getenv("XF_XFYUN_TTS_APP_ID", ""),
+                api_key=os.getenv("XF_XFYUN_TTS_API_KEY", ""),
+                api_secret=os.getenv("XF_XFYUN_TTS_API_SECRET", ""),
+                voice_name="aisbabyxu",
+                sample_rate=16000,
+                speed=100,
+                volume=50,
+            )
+
+            client = XfYunTTSClient(tts_config, self.ten_env)
+            pcm_chunks: list[bytes] = []
+            async for chunk, event_type in client.get(greeting_text):
+                if event_type == 1 and chunk:
+                    pcm_chunks.append(chunk)
+                elif event_type == 2:
+                    break
+                elif event_type in (3, 4):
+                    self.ten_env.log_error(f"Greeting TTS pre-generation failed: {chunk}")
+                    return
+
+            if pcm_chunks:
+                pcm_data = b"".join(pcm_chunks)
+                duration_s = len(pcm_data) / (tts_config.sample_rate * 2)
+                greeting_file = "/tmp/greeting_audio.pcm"
+                with open(greeting_file, "wb") as f:
+                    f.write(pcm_data)
+                self.ten_env.log_info(
+                    f"[MainControlExtension] Greeting TTS saved to file: "
+                    f"{greeting_file} ({len(pcm_data)} bytes, {duration_s:.1f}s, "
+                    f"speed={tts_config.speed})"
+                )
+            else:
+                self.ten_env.log_warn("Greeting TTS returned no audio")
+
+        except Exception as e:
+            self.ten_env.log_error(f"Failed to pre-generate greeting: {e}")
 
     async def on_stop(self, ten_env: AsyncTenEnv):
         ten_env.log_info("[MainControlExtension] on_stop")

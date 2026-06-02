@@ -164,6 +164,11 @@
     },
     {
       "path": "../../../ten_packages/extension/murf_tts_python"
+    },
+    {
+      "type": "extension",
+      "name": "default_extension_python",
+      "version": "^0.11.66"
     }
   ],
   "scripts": {

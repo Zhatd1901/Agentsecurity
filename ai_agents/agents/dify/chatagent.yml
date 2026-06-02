@@ -1,0 +1,1253 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: chatagent
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.17@f7a5c1d222d17ee419b17a80d6e4923838fe93788dc724a3af73fbc6990b3a32
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1780242472703-true-1780243951723-target
+      selected: false
+      source: '1780242472703'
+      sourceHandle: 'true'
+      target: '1780243951723'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 1780243951723-source-1780244312460-target
+      selected: false
+      source: '1780243951723'
+      sourceHandle: source
+      target: '1780244312460'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1780242472703-031095b1-1a63-482a-a786-735e8d3b32f6-1780246237913-target
+      selected: false
+      source: '1780242472703'
+      sourceHandle: 031095b1-1a63-482a-a786-735e8d3b32f6
+      target: '1780246237913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1780242472703-58c5c44a-3721-4a01-9cd8-4a12d9745f0a-1780249818806-target
+      selected: false
+      source: '1780242472703'
+      sourceHandle: 58c5c44a-3721-4a01-9cd8-4a12d9745f0a
+      target: '1780249818806'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 1780249818806-source-17802498719410-target
+      selected: false
+      source: '1780249818806'
+      sourceHandle: source
+      target: '17802498719410'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 17802498719410-source-17802499186240-target
+      selected: false
+      source: '17802498719410'
+      sourceHandle: source
+      target: '17802499186240'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 17802499186240-source-17802501157130-target
+      selected: false
+      source: '17802499186240'
+      sourceHandle: source
+      target: '17802501157130'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: http-request
+      id: 1780250981928-source-1780251855411-target
+      selected: false
+      source: '1780250981928'
+      sourceHandle: source
+      target: '1780251855411'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: llm
+      id: 1780251855411-source-1780252069721-target
+      selected: false
+      source: '1780251855411'
+      sourceHandle: source
+      target: '1780252069721'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: http-request
+      id: 1780252069721-source-1780252253956-target
+      selected: false
+      source: '1780252069721'
+      sourceHandle: source
+      target: '1780252253956'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1780259556742-source-1780242472703-target
+      selected: false
+      source: '1780259556742'
+      sourceHandle: source
+      target: '1780242472703'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1780242472703-2a68c796-97ac-42cc-b8ec-2a6e45523d59-1780250981928-target
+      selected: false
+      source: '1780242472703'
+      sourceHandle: 2a68c796-97ac-42cc-b8ec-2a6e45523d59
+      target: '1780250981928'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 1780246237913-source-1780248056143-target
+      selected: false
+      source: '1780246237913'
+      sourceHandle: source
+      target: '1780248056143'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1780248056143-source-1780317546650-target
+      selected: false
+      source: '1780248056143'
+      sourceHandle: source
+      target: '1780317546650'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1780317546650-true-17802486812080-target
+      selected: false
+      source: '1780317546650'
+      sourceHandle: 'true'
+      target: '17802486812080'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1780244312460-source-17802423839060-target
+      selected: false
+      source: '1780244312460'
+      sourceHandle: source
+      target: '17802423839060'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1780317546650-a88a1d3f-7448-4497-b136-ab5430080108-17803175807920-target
+      source: '1780317546650'
+      sourceHandle: a88a1d3f-7448-4497-b136-ab5430080108
+      target: '17803175807920'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1780317546650-false-17803240161400-target
+      source: '1780317546650'
+      sourceHandle: 'false'
+      target: '17803240161400'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-551
+            key: ''
+            type: text
+            value: "{\n  \"text\": \"您有新的访客请求待处理!（您后续还有{{#1780244312460.waiting_count#}}条待处理）\\\
+              n当前待处理访客记录:\\n车牌号：{{#1780244312460.license_plate#}}\\n到访时间：{{#1780244312460.entry_time#}}\\\
+              n到访事由：{{#1780244312460.purpose#}}\\n单位/公司：{{#1780244312460.company#}}\\\
+              n手机号：{{#1780244312460.phone#}}\n}"
+          type: json
+        desc: ''
+        headers: Content-Type:application/json
+        isInIteration: false
+        isInLoop: false
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 推送微信
+        type: http-request
+        url: http://host.docker.internal:8000/api/wechat/send
+        variables: []
+      height: 137
+      id: '17802423839060'
+      position:
+        x: 2600.798257812006
+        y: -448.1877414421728
+      positionAbsolute:
+        x: 2600.798257812006
+        y: -448.1877414421728
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: b74d178f-4ff1-4eed-9747-b5834c6e19e6
+            value: new_visitor_created
+            varType: string
+            variable_selector:
+            - '1780259556742'
+            - action
+          id: 'true'
+          logical_operator: and
+        - case_id: 031095b1-1a63-482a-a786-735e8d3b32f6
+          conditions:
+          - comparison_operator: is
+            id: 5eede963-da7a-4f19-b7ed-39c581e8771d
+            value: confirm_head
+            varType: string
+            variable_selector:
+            - '1780259556742'
+            - action
+          id: 031095b1-1a63-482a-a786-735e8d3b32f6
+          logical_operator: and
+        - case_id: 58c5c44a-3721-4a01-9cd8-4a12d9745f0a
+          conditions:
+          - comparison_operator: is
+            id: f5e628ae-eded-4c07-9acb-ee3f53c83ba5
+            value: delete_head
+            varType: string
+            variable_selector:
+            - '1780259556742'
+            - action
+          id: 58c5c44a-3721-4a01-9cd8-4a12d9745f0a
+          logical_operator: and
+        - case_id: 2a68c796-97ac-42cc-b8ec-2a6e45523d59
+          conditions:
+          - comparison_operator: is
+            id: 36bafe05-d5fa-4e39-933f-d2b5b4fbe36d
+            value: '00000000000'
+            varType: string
+            variable_selector:
+            - '1780259556742'
+            - action
+          id: 2a68c796-97ac-42cc-b8ec-2a6e45523d59
+          logical_operator: and
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 363
+      id: '1780242472703'
+      position:
+        x: 1540.7958626187685
+        y: 0
+      positionAbsolute:
+        x: 1540.7958626187685
+        y: 0
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        headers: ''
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 查看未推送数据
+        type: http-request
+        url: http://host.docker.internal:8000/api/visitors/queue/head
+        variables: []
+      height: 137
+      id: '1780243951723'
+      position:
+        x: 1871.5714285714284
+        y: -184.00000000000003
+      positionAbsolute:
+        x: 1871.5714285714284
+        y: -184.00000000000003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\n\ndef main(input=None):\n    # input 是上一个节点传进来的 body JSON\
+          \ 字符串\n    data = input\n\n    # 如果 input 是字符串，尝试解析成 dict\n    if isinstance(data,\
+          \ str):\n        try:\n            data = json.loads(data)\n        except\
+          \ Exception:\n            data = {}\n\n    # 如果 input 为空或解析失败，兜底为空字典\n \
+          \   if not isinstance(data, dict):\n        data = {}\n\n    # 安全取值，全部转成字符串，适配\
+          \ Dify 输出变量 String\n    license_plate = str(data.get(\"license_plate\",\
+          \ \"\"))\n    entry_time = str(data.get(\"entry_time\", \"\"))\n    purpose\
+          \ = str(data.get(\"purpose\", \"\"))\n    company = str(data.get(\"company\"\
+          , \"\"))\n    phone = str(data.get(\"phone\", \"\"))\n    pending_count\
+          \ = str(data.get(\"pending_count\", \"0\"))\n    waiting_count = str(data.get(\"\
+          waiting_count\", \"0\"))\n\n    return {\n        \"waiting_count\": waiting_count,\n\
+          \        \"license_plate\": license_plate,\n        \"entry_time\": entry_time,\n\
+          \        \"purpose\": purpose,\n        \"company\": company,\n        \"\
+          phone\": phone,\n        \"pending_count\": pending_count\n    }"
+        code_language: python3
+        outputs:
+          company:
+            children: null
+            type: string
+          entry_time:
+            children: null
+            type: string
+          license_plate:
+            children: null
+            type: string
+          pending_count:
+            children: null
+            type: string
+          phone:
+            children: null
+            type: string
+          purpose:
+            children: null
+            type: string
+          waiting_count:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1780243951723'
+          - body
+          value_type: string
+          variable: input
+      height: 51
+      id: '1780244312460'
+      position:
+        x: 2162.244549665407
+        y: -184.00000000000003
+      positionAbsolute:
+        x: 2162.244549665407
+        y: -184.00000000000003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-255
+            key: ''
+            type: text
+            value: '{}'
+          type: json
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 确认队头
+        type: http-request
+        url: http://host.docker.internal:8000/api/visitors/queue/confirm
+        variables: []
+      height: 153
+      id: '1780246237913'
+      position:
+        x: 1871.5714285714284
+        y: 0
+      positionAbsolute:
+        x: 1871.5714285714284
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\n\ndef main(input=None):\n    data = input\n\n    # 如果\
+          \ input 是 JSON 字符串，转成 dict\n    if isinstance(data, str):\n        try:\n\
+          \            data = json.loads(data)\n        except Exception:\n      \
+          \      data = {}\n\n    # 如果 input 为空或不是 dict，兜底为空字典\n    if not isinstance(data,\
+          \ dict):\n        data = {}\n\n    # 当前已确认访客\n    license_plate = str(data.get(\"\
+          license_plate\", \"\"))\n    entry_time = str(data.get(\"entry_time\", \"\
+          \"))\n    purpose = str(data.get(\"purpose\", \"\"))\n    company = str(data.get(\"\
+          company\", \"\"))\n    phone = str(data.get(\"phone\", \"\"))\n\n\n    #\
+          \ 队列数量\n    pending_count = str(data.get(\"pending_count\", \"0\"))\n  \
+          \  waiting_count = str(data.get(\"waiting_count\", pending_count))\n\n \
+          \   # 下一条待确认访客\n    next_license_plate = str(data.get(\"next_license_plate\"\
+          , \"\"))\n    next_entry_time = str(data.get(\"next_entry_time\", \"\"))\n\
+          \    next_purpose = str(data.get(\"next_purpose\", \"\"))\n    next_company\
+          \ = str(data.get(\"next_company\", \"\"))\n    next_phone = str(data.get(\"\
+          next_phone\", \"\"))\n\n\n    return {\n        \"pending_count\": pending_count,\n\
+          \        \"waiting_count\": waiting_count,\n\n        \"license_plate\"\
+          : license_plate,\n        \"entry_time\": entry_time,\n        \"purpose\"\
+          : purpose,\n        \"company\": company,\n        \"phone\": phone,\n\n\
+          \        \"next_phone\": next_phone,\n        \"next_company\": next_company,\n\
+          \        \"next_purpose\": next_purpose,\n        \"next_entry_time\": next_entry_time,\n\
+          \        \"next_license_plate\": next_license_plate\n    }"
+        code_language: python3
+        outputs:
+          company:
+            children: null
+            type: string
+          entry_time:
+            children: null
+            type: string
+          license_plate:
+            children: null
+            type: string
+          next_company:
+            children: null
+            type: string
+          next_entry_time:
+            children: null
+            type: string
+          next_license_plate:
+            children: null
+            type: string
+          next_phone:
+            children: null
+            type: string
+          next_purpose:
+            children: null
+            type: string
+          pending_count:
+            children: null
+            type: string
+          phone:
+            children: null
+            type: string
+          purpose:
+            children: null
+            type: string
+          waiting_count:
+            children: null
+            type: string
+        selected: false
+        title: 解析确认队头结果
+        type: code
+        variables:
+        - value_selector:
+          - '1780246237913'
+          - body
+          value_type: string
+          variable: input
+      height: 51
+      id: '1780248056143'
+      position:
+        x: 2162.244549665407
+        y: 0
+      positionAbsolute:
+        x: 2162.244549665407
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-710
+            key: ''
+            type: text
+            value: "{\n  \"text\": \"以下访客信息已完成确认！（您后续还有{{#1780248056143.pending_count#}}条待处理）\\\
+              n\\n车牌号：{{#1780248056143.license_plate#}}\\n到访时间：{{#1780248056143.entry_time#}}\\\
+              n到访事由：{{#1780248056143.purpose#}}\\n单位/公司：{{#1780248056143.company#}}\\\
+              n手机号：{{#1780248056143.phone#}}\\n\\n回复“删除：原因”删除该登记。\"\n}"
+          type: json
+        desc: ''
+        headers: Content-Type:application/json
+        isInIteration: false
+        isInLoop: false
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 确认推送微信单条
+        type: http-request
+        url: http://host.docker.internal:8000/api/wechat/send
+        variables: []
+      height: 137
+      id: '17802486812080'
+      position:
+        x: 2889.9610213809237
+        y: -237.21506410258897
+      positionAbsolute:
+        x: 2889.9610213809237
+        y: -237.21506410258897
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-762
+            key: ''
+            type: text
+            value: "{\n  \"delete_reason\": \"管理员删除\"\n}"
+          type: json
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 删除队头
+        type: http-request
+        url: http://host.docker.internal:8000/api/visitors/queue/delete
+        variables: []
+      height: 153
+      id: '1780249818806'
+      position:
+        x: 1871.5714285714284
+        y: 191
+      positionAbsolute:
+        x: 1871.5714285714284
+        y: 191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: Content-Type:application/json
+        isInIteration: false
+        isInLoop: false
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 查看未推送数据 (2)
+        type: http-request
+        url: http://host.docker.internal:8000/api/visitors/queue/head
+        variables: []
+      height: 137
+      id: '17802498719410'
+      position:
+        x: 2190.8983356214153
+        y: 191
+      positionAbsolute:
+        x: 2190.8983356214153
+        y: 191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\n\ndef main(response_body: str = \"\") -> dict:\n    if\
+          \ isinstance(response_body, dict):\n        data = response_body\n    else:\n\
+          \        try:\n            data = json.loads(response_body or \"{}\")\n\
+          \        except Exception:\n            data = {}\n\n    return {\n    \
+          \    \"has_item\": str(data.get(\"has_item\", \"false\")).lower(),\n   \
+          \     \"pending_count\": str(data.get(\"pending_count\", \"0\")),\n    \
+          \    \"waiting_count\": str(data.get(\"waiting_count\", \"0\")),\n     \
+          \   \"visitor_id\": str(data.get(\"visitor_id\", \"\")),\n        \"license_plate\"\
+          : str(data.get(\"license_plate\", \"\")),\n        \"entry_time\": str(data.get(\"\
+          entry_time\", \"\")),\n        \"purpose\": str(data.get(\"purpose\", \"\
+          \")),\n        \"company\": str(data.get(\"company\", \"\")),\n        \"\
+          phone\": str(data.get(\"phone\", \"\")),\n        \"name\": str(data.get(\"\
+          name\", \"\")),\n        \"status\": str(data.get(\"status\", \"\")),\n\
+          \    }"
+        code_language: python3
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        outputs:
+          company:
+            children: null
+            type: string
+          entry_time:
+            children: null
+            type: string
+          has_item:
+            children: null
+            type: string
+          license_plate:
+            children: null
+            type: string
+          pending_count:
+            children: null
+            type: string
+          phone:
+            children: null
+            type: string
+          purpose:
+            children: null
+            type: string
+          status:
+            children: null
+            type: string
+          visitor_id:
+            children: null
+            type: string
+          waiting_count:
+            children: null
+            type: string
+        selected: false
+        title: 解析删除队头结果
+        type: code
+        variables: []
+      height: 51
+      id: '17802499186240'
+      position:
+        x: 2487.609343976253
+        y: 191
+      positionAbsolute:
+        x: 2487.609343976253
+        y: 191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-487
+            key: ''
+            type: text
+            value: "{\n  \"content\": \"信息删除完成，请您确认.\"\n}"
+          type: raw-text
+        desc: ''
+        headers: Content-Type:application/json
+        isInIteration: false
+        isInLoop: false
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 删除推送微信
+        type: http-request
+        url: http://host.docker.internal:8000/api/wechat/send
+        variables: []
+      height: 137
+      id: '17802501157130'
+      position:
+        x: 2835.5165330757163
+        y: 191
+      positionAbsolute:
+        x: 2835.5165330757163
+        y: 191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+            thinking: true
+          mode: chat
+          name: deepseek-v4-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 8e803bff-ec93-4edf-9062-d30c3f94433b
+          role: system
+          text: "# Role: SQLite 查询语句生成器\n\n## Profile\n- language: 中文\n- description:\
+            \ 专业的数据库查询助手，能够根据管理员的自然语言问题，精准生成符合规范的 SQLite SELECT 查询语句。专注于 visitors\
+            \ 访客管理表的数据查询，理解业务语义并转化为高效的 SQL 代码。\n- background: 为园区/企业访客管理系统设计，服务于管理员日常的数据统计、筛选和核查工作。系统使用\
+            \ SQLite 数据库，所有访客记录通过 visitors 表管理，涵盖登记、确认、删除等完整生命周期。\n- personality:\
+            \ 严谨、准确、简洁，只输出可执行的 SQL 语句，不做任何多余的解释或修饰\n- expertise: SQLite 语法、访客管理业务逻辑、时间日期处理、聚合统计查询\n\
+            - target_audience: 系统管理员、安保人员、前台接待人员，需要通过中文提问快速获取访客数据\n\n## Skills\n\n\
+            1. 数据查询能力\n   - 基础查询：根据车牌号、姓名、手机号、单位等字段进行精确或模糊匹配\n   - 状态筛选：根据待确认(0)、录入完成(1)、已删除(2)三种状态过滤记录\n\
+            \   - 时间范围查询：支持\"今天\"、\"昨天\"、\"本周\"等自然语言时间表达，匹配 entry_time 或 deleted_at\
+            \ 字段。对于具体时间段查询（如\"今天中午12点到下午\"），应使用范围比较（>= 和 <）而非字符串模糊匹配，确保查询边界精确\n  \
+            \ - 聚合统计：使用 COUNT(*)、GROUP BY 等实现访客数量统计和分类汇总\n   - 排序与分页：默认按到访时间倒序排列，限制返回条数\n\
+            \n2. 业务理解能力\n   - 状态映射：自动将\"待确认\"/\"未确认\"转为 status=0，\"已确认\"/\"录入完成\"\
+            转为 status=1，\"已删除\"转为 status=2\n   - 日期解析：将\"今天\"解析为 entry_time 前8位匹配当前日期的条件(如\
+            \ entry_time LIKE '20260101%')；但当用户给出具体时间区间时，应优先使用范围比较以提升准确性和可读性\n   -\
+            \ 字段关联：理解\"车牌\"指 license_plate，\"电话\"指 phone，\"单位\"指 company 等业务术语\n \
+            \  - 去重处理：在适当场景下使用 DISTINCT 避免重复数据\n\n## Rules\n\n1. 输出原则：\n   - 只输出 SQL\
+            \ 语句：不添加任何解释、说明或额外文本\n   - 只生成 SELECT 查询：不生成 INSERT、UPDATE、DELETE 等修改操作\n\
+            \   - 纯文本输出：不使用任何代码块标记(如```sql)或其他 Markdown 格式\n   - 单行或多行均可：保持 SQL 可读性，但不强制格式化\n\
+            \n2. 业务规则：\n   - 默认限制条数：所有查询必须添加 LIMIT 20，除非用户明确指定了其他条数要求\n   - 默认排序规则：使用\
+            \ ORDER BY entry_time DESC 按到访时间倒序排列\n   - 状态查询规范：待确认→status=0，录入完成/已确认→status=1，已删除→status=2\n\
+            \   - 时间匹配规则：当查询涉及具体到小时的精确时间段（如\"12点之后\"），必须使用范围比较（entry_time >= 'YYYYMMDDHHMMSS'\
+            \ AND entry_time < 'YYYYMMDD'）而非 LIKE 模糊匹配\n\n3. 限制条件：\n   - 单表查询：只能在\
+            \ visitors 表上操作，不支持 JOIN 多表关联\n   - 禁止修改：不能生成任何可能修改数据或表结构的语句\n   - 安全限制：不需要考虑\
+            \ SQL 注入防护，输入问题来自可信管理员\n   - 统计优先：当问题涉及\"多少\"/\"数量\"/\"几个\"时，使用 COUNT(*)\
+            \ 并设置别名\n\n## Workflows\n\n- 目标: 将管理员的中文问题转化为一条合法的 SQLite SELECT 语句\n\
+            - 步骤 1: 识别查询意图(查看详情/统计数量/筛选条件)，判断是否需要 COUNT(*) 聚合\n- 步骤 2: 提取查询条件，将中文表述映射为字段名和值(车牌→license_plate,\
+            \ 今天→日期匹配, 待确认→status=0)。对于精确时间段，构建范围比较条件而非模糊匹配\n- 步骤 3: 组合 SQL 语句，按需添加\
+            \ WHERE 子句、ORDER BY entry_time DESC、LIMIT 20\n- 步骤 4: 检查语法正确性和规则符合度，确保纯文本输出无标记，且时间查询优先使用范围比较\n\
+            - 预期结果: 一条直接可用的 SQLite SELECT 查询语句\n\n## OutputFormat\n\n1. 输出格式类型：\n\
+            \   - format: text/plain\n   - structure: 纯 SQL 语句，分号结尾\n   - style: 关键字大写(SELECT,\
+            \ FROM, WHERE, ORDER BY, LIMIT)，字段名小写，便于阅读\n   - special_requirements:\
+            \ 不包含任何代码块标记、引号包裹或额外字符，不包含任何原因解释或推理过程\n\n2. 格式规范：\n   - indentation: 可选缩进，长语句可换行保持可读性\n\
+            \   - sections: WHERE 条件较多时可分行书写，使用 AND 连接\n   - highlighting: 无需任何视觉强调，纯文本即可\n\
+            \n3. 验证规则：\n   - validation: 必须包含 SELECT 关键字，必须包含 FROM visitors，必须以分号结尾\n\
+            \   - constraints: 不生成 INSERT/UPDATE/DELETE/DROP 语句，不使用 Markdown 代码块\n\
+            \   - error_handling: 如果问题无法转化为合法查询，输出空字符串而非错误信息\n\n4. 示例说明：\n   1. 示例1：\n\
+            \      - 标题: 统计待确认访客数量\n      - 格式类型: text/plain\n      - 说明: 用户问题\"今天有多少待确认的访客？\"\
+            \n      - 示例内容: SELECT COUNT(*) AS total FROM visitors WHERE status =\
+            \ 0 AND entry_time LIKE '20260101%';\n   \n   2. 示例2：\n      - 标题: 查询已删除记录\n\
+            \      - 格式类型: text/plain\n      - 说明: 用户问题\"查看所有已删除的访客记录\"\n      - 示例内容:\
+            \ SELECT * FROM visitors WHERE status = 2 ORDER BY deleted_at DESC LIMIT\
+            \ 20;\n   \n   3. 示例3：\n      - 标题: 精确时间段查询\n      - 格式类型: text/plain\n\
+            \      - 说明: 用户问题\"今天中午12点以后的访客\"\n      - 示例内容: SELECT * FROM visitors\
+            \ WHERE entry_time >= '20260101120000' AND entry_time < '20260102' ORDER\
+            \ BY entry_time DESC LIMIT 20;\n\n## Initialization\n作为 SQLite 查询语句生成器，你必须遵守上述\
+            \ Rules，按照 Workflows 执行任务，并按照 OutputFormat 输出。"
+        selected: false
+        structured_output_enabled: true
+        title: 解析管理员查询
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1780250981928'
+      position:
+        x: 1871.5714285714284
+        y: 382
+      positionAbsolute:
+        x: 1871.5714285714284
+        y: 382
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-1295
+            key: ''
+            type: text
+            value: "{\n  \"sql\": \"{{#1780250981928.text#}}\"\n}"
+          type: json
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求 9
+        type: http-request
+        url: http://host.docker.internal:8000/api/db/query
+        variables: []
+      height: 137
+      id: '1780251855411'
+      position:
+        x: 2190.8983356214153
+        y: 382
+      positionAbsolute:
+        x: 2190.8983356214153
+        y: 382
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-v4-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: abda5cf8-5ea5-44c2-b747-84cea8aaa874
+          role: system
+          text: "# Role: 门卫系统查询结果整理助手\n\n## Profile\n- language: 中文\n- description:\
+            \ 专业的门卫系统查询结果整理助手，负责将数据库查询结果转换为简洁明了的中文回复，方便管理员通过微信快速获取访客信息\n- background:\
+            \ 为物业管理公司开发的门卫系统辅助工具，帮助管理员快速查询和整理访客记录，提升沟通效率\n- personality: 严谨、高效、专业，注重信息的准确性和完整性\n\
+            - expertise: 数据整理、信息提炼、文本格式化、门卫管理流程\n- target_audience: 物业管理员、门卫、安保人员等需要通过微信快速获取访客信息的用户\n\
+            \n## Skills\n\n1. 数据处理能力\n   - 数据解析: 准确解析SQLite数据库查询返回的visitors表结构数据\n\
+            \   - 字段映射: 将数据库字段准确翻译为易于理解的中文描述\n   - 状态识别: 根据status字段值（0/1/2）正确判断访客状态并给出对应说明\n\
+            \   - 时间格式化: 将YYYYMMDDHHMMSS格式的时间转换为可读性更强的格式\n\n2. 内容组织能力\n   - 信息提炼:\
+            \ 从完整数据库记录中提取管理员关心的核心信息\n   - 结构编排: 按照逻辑顺序组织访客信息，确保层次清晰\n   - 文本简化: 去除冗余信息，生成适合微信发送的简短回复\n\
+            \   - 异常处理: 对已删除记录（status=2）特别标注删除原因和时间\n\n## Rules\n\n1. 信息处理原则：\n  \
+            \ - 必填字段优先: 确保所有必填字段（车牌号、到访时间、事由、单位、手机号、姓名）都在回复中体现\n   - 状态区分: 根据status字段明确标注访客状态（待确认/录入完成/已删除），已删除记录需包含删除原因\n\
+            \   - 时间可读: 将YYYYMMDDHHMMSS格式转换为\"YYYY年MM月DD日 HH:MM:SS\"格式\n   - 简洁优先:\
+            \ 控制回复长度适合微信单条消息显示，避免过长\n\n2. 回复规范：\n   - 逻辑顺序: 按照\"访客基本信息→到访详情→状态信息\"\
+            的顺序组织内容\n   - 标签清晰: 使用【】标注信息类别，如【访客姓名】【车牌号】等\n   - 标点统一: 使用中文标点符号，保持格式统一\n\
+            \   - 异常突出: 如有异常情况（如已删除），需在回复开头或结尾明确提示\n\n3. 限制条件：\n   - 仅处理visitors表数据:\
+            \ 不添加无关信息或个人猜测\n   - 严格遵循数据: 数据库中没有的信息不得自行编造\n   - 限制输出长度: 单条回复不超过500字，适合微信阅读\n\
+            \   - 尊重数据隐私: 不修改、不隐藏任何数据库返回的字段值\n\n## Workflows\n\n- 目标: 将管理员问题和数据库查询结果整合为适合微信发送的简短中文回复\n\
+            - 步骤 1: 解析数据库查询结果{{#1780251855411.body#}}中的visitors表数据，识别所有字段值及对应的状态码\n\
+            - 步骤 2: 分析管理员问题{{#1780250981928.text#}}，明确管理员的核心关注点，确定回复中需要强调的信息\n- 步骤\
+            \ 3: 按照Rules中的信息处理原则，格式化时间、翻译状态、整理字段信息，组织成结构清晰的文本\n- 预期结果: 生成一条可直接通过微信发送的简短中文回复，包含管理员所需的访客信息\n\
+            \n## OutputFormat\n\n1. 输出格式类型：\n   - format: text\n   - style: 简洁正式，适合工作沟通场景\n\
+            \n2. 格式规范：\n   - indentation: 不使用缩进，直接换行排列\n   - sections: 用空行分隔不同类型的信息（基本信息/到访详情/状态信息）\n\
+            \n3. 验证规则：\n   - validation: 确保所有必填字段均已包含，时间格式转换正确，状态描述准确\n   - constraints:\
+            \ 不添加任何数据库未返回的信息，不修改原始数据值\n   - error_handling: 如数据库查询结果格式异常或字段缺失，回复\"\
+            数据查询异常，请联系技术人员\"\n\n\n## Initialization\n作为门卫系统查询结果整理助手，你必须遵守上述Rules，"
+        selected: false
+        title: 整理sql返回值
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1780252069721'
+      position:
+        x: 2487.609343976253
+        y: 382
+      positionAbsolute:
+        x: 2487.609343976253
+        y: 382
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-52
+            key: ''
+            type: text
+            value: "{\n  \"text\": \"{{#1780252069721.text#}}\"\n}"
+          type: json
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: llm数据库推送微信
+        type: http-request
+        url: http://host.docker.internal:8000/api/wechat/send
+        variables: []
+      height: 137
+      id: '1780252253956'
+      position:
+        x: 2794.8983356214153
+        y: 382
+      positionAbsolute:
+        x: 2794.8983356214153
+        y: 382
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: action
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: action
+        - default: ''
+          hint: ''
+          label: query
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: query
+        - default: ''
+          hint: ''
+          label: user_id
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: user_id
+      height: 160
+      id: '1780259556742'
+      position:
+        x: 1217.9925208692027
+        y: -16.070131960788643
+      positionAbsolute:
+        x: 1217.9925208692027
+        y: -16.070131960788643
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 52e26aad-e6cb-453d-803f-122d89ce0c84
+            value: '0'
+            varType: string
+            variable_selector:
+            - '1780248056143'
+            - pending_count
+          id: 'true'
+          logical_operator: and
+        - case_id: a88a1d3f-7448-4497-b136-ab5430080108
+          conditions:
+          - comparison_operator: is
+            id: 83e23e37-a3dc-48a6-94bb-55feded7bdb2
+            value: '-1'
+            varType: string
+            variable_selector:
+            - '1780248056143'
+            - pending_count
+          id: a88a1d3f-7448-4497-b136-ab5430080108
+          logical_operator: and
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 219
+      id: '1780317546650'
+      position:
+        x: 2467.1390084953186
+        y: -83.08547930496772
+      positionAbsolute:
+        x: 2467.1390084953186
+        y: -83.08547930496772
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-710
+            key: ''
+            type: text
+            value: "{\n  \"text\": \"暂无访客需要登记\"\n}"
+          type: json
+        desc: ''
+        headers: Content-Type:application/json
+        isInIteration: false
+        isInLoop: false
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 无确认推送微信
+        type: http-request
+        url: http://host.docker.internal:8000/api/wechat/send
+        variables: []
+      height: 137
+      id: '17803175807920'
+      position:
+        x: 3009.1706221228337
+        y: -58.109854447094435
+      positionAbsolute:
+        x: 3009.1706221228337
+        y: -58.109854447094435
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-710
+            key: ''
+            type: text
+            value: "{\n  \"text\": \"以下访客信息已完成确认！\\n车牌号：{{#1780248056143.license_plate#}}\\\
+              n手机号：{{#1780248056143.phone#}}\\n到访时间：{{#1780248056143.entry_time#}}\\\
+              n\\n——————————\\n\\n\U0001F4CC 下一条待确认访客（剩余{{#1780248056143.pending_count#}}条）：\\\
+              n\\n手机号：{{#1780248056143.next_phone#}}\\n车牌号：{{#1780248056143.next_license_plate#}}\\\
+              n到访时间：{{#1780248056143.next_entry_time#}}\\n到访事由：{{#1780248056143.next_purpose#}}\\\
+              n单位/公司：{{#1780248056143.next_company#}}\\n\\n回复“删除：原因”删除该登记。\"\n}"
+          type: json
+        desc: ''
+        headers: Content-Type:application/json
+        isInIteration: false
+        isInLoop: false
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 确认推送微信多条
+        type: http-request
+        url: http://host.docker.internal:8000/api/wechat/send
+        variables: []
+      height: 137
+      id: '17803240161400'
+      position:
+        x: 3243.9616046492047
+        y: 104.62412143694235
+      positionAbsolute:
+        x: 3243.9616046492047
+        y: 104.62412143694235
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -623.8718647356895
+      y: 448.31928778249835
+      zoom: 0.8304700240908939
+  rag_pipeline_variables: []
