@@ -412,14 +412,8 @@ async function sendToDify(
       const workflowData = data.data || data;
       const outputs = workflowData.outputs || {};
       const answer = outputs.text || outputs.output || outputs.message
-        || (workflowData.error ? `❌ Workflow 执行失败: ${workflowData.error}` : '');
-
-      logger.info('Dify workflow response', {
-        status: workflowData.status,
-        error: workflowData.error,
-        outputKeys: Object.keys(outputs),
-        answer: answer || '(empty, workflow may have sent reply directly)',
-      });
+        || (workflowData.error ? `❌ Workflow 执行失败: ${workflowData.error}` : '')
+        || (Object.keys(outputs).length > 0 ? JSON.stringify(outputs) : '');
 
       if (answer) {
         sessionStore.addChatMessage(session, 'assistant', answer);
@@ -427,13 +421,6 @@ async function sendToDify(
         for (const chunk of chunks) {
           await sender.sendText(fromUserId, contextToken, chunk);
         }
-      } else if (workflowData.status === 'succeeded') {
-        // Workflow 已通过内部 HTTP 节点直接回复微信，无需额外发送
-        logger.info('Workflow succeeded — reply sent internally, no output needed');
-      } else if (Object.keys(outputs).length > 0) {
-        const raw = JSON.stringify(outputs);
-        sessionStore.addChatMessage(session, 'assistant', raw);
-        await sender.sendText(fromUserId, contextToken, raw);
       } else {
         await sender.sendText(fromUserId, contextToken, 'ℹ️ Dify 无返回内容。');
       }
